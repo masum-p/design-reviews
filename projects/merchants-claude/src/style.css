@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face { font-family: Inter; src: url('/fonts/inter-400.ttf'); font-weight: 400; font-display: block }
+@font-face { font-family: Inter; src: url('/fonts/inter-500.ttf'); font-weight: 500; font-display: block }
+@font-face { font-family: Inter; src: url('/fonts/inter-600.ttf'); font-weight: 600; font-display: block }
+
+/* ---------------------------------------------------------------------------
+   Tokens
+   surfaces  canvas #171717 · rail #141414 · card #1d1d1d · track #2a2a2a
+   type      22/600 page title · 13/600 band heading · 15/600 card title
+             13 body · 11.5 meta
+   rhythm    rail 240 · content inset 28 · band gap 20 · card gap 14 · pad 18
+--------------------------------------------------------------------------- */
+:root {
+  --canvas: #171717;
+  --rail: #141414;
+  --card: #1d1d1d;
+  --raise: #242424;
+  --track: #2a2a2a;
+  --line: #2c2c2c;
+  --hair: #262626;
+
+  --t1: #ededed;
+  --t2: #a3a3a3;
+  --t3: #8a8a8a; /* 4.8:1 on the card surface, keeps meta text legible */
+
+  --brand: #3ecf8e;
+  --brand-ink: #0d1f18;
+  --brand-deep: #2d6a52;
+  --fail: #e5675c;
+  --warn: #d9a13b;
+
+  --r: 8px;
+  --pad: 18px;
+  --gap: 14px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: #0f0f0f;
+  color: var(--t2);
+  font: 400 13px/1.45 Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+#root { display: grid; place-items: center; }
+.preview { position: relative; overflow: hidden; }
+.artboard { width: 1440px; height: 1024px; transform-origin: top left; }
+
+h1, h2, h3, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0;
+  display: inline-flex; align-items: center; gap: 8px; cursor: default;
+}
+button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+
+.shell { width: 1440px; height: 1024px; display: flex; background: var(--canvas); }
+
+/* ---- rail ---------------------------------------------------------------- */
+.rail {
+  width: 240px; flex: none; display: flex; flex-direction: column;
+  padding: 22px 14px 14px; background: var(--rail); border-right: 1px solid var(--line);
+}
+.brand {
+  display: flex; align-items: center; gap: 10px; padding: 0 6px;
+  font-size: 17px; font-weight: 600; letter-spacing: -.3px; color: var(--t1);
+}
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
+  background: var(--brand); color: var(--brand-ink); font-size: 14px; font-weight: 600;
+}
+.rail nav { margin-top: 26px; display: flex; flex-direction: column; gap: 2px; }
+.nav-item {
+  width: 100%; height: 36px; padding: 0 10px; gap: 11px; border-radius: 7px;
+  font-size: 13px; color: var(--t2); position: relative;
+}
+.nav-item svg { color: var(--t3); }
+.nav-item.active { background: var(--raise); color: var(--t1); font-weight: 500; }
+.nav-item.active svg { color: var(--brand); }
+.nav-item.active::before {
+  content: ''; position: absolute; left: -14px; top: 8px; bottom: 8px;
+  width: 2px; border-radius: 0 2px 2px 0; background: var(--brand);
+}
+.rail-foot {
+  margin-top: auto; display: flex; align-items: center; gap: 10px;
+  padding: 12px 6px 2px; border-top: 1px solid var(--line);
+}
+.rail-foot strong { display: block; font-size: 12.5px; font-weight: 500; color: var(--t1); }
+.rail-foot small { display: block; font-size: 11.5px; color: var(--t3); }
+
+.chip-avatar {
+  width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: var(--raise); border: 1px solid var(--line);
+  font-size: 10.5px; font-weight: 500; color: var(--t2); letter-spacing: .2px;
+}
+
+/* ---- top bar: identity + search + one primary action --------------------- */
+.main { width: 1200px; display: flex; flex-direction: column; }
+.topbar {
+  height: 60px; flex: none; padding: 0 28px; display: flex; align-items: center;
+  justify-content: space-between; border-bottom: 1px solid var(--line);
+}
+.topbar-title { display: flex; align-items: center; gap: 12px; }
+h1 { font-size: 22px; font-weight: 600; letter-spacing: -.5px; color: var(--t1); }
+.badge {
+  padding: 3px 8px; border-radius: 20px; border: 1px solid var(--line);
+  background: var(--card); font-size: 11.5px; color: var(--t2);
+}
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.search {
+  width: 210px; height: 32px; padding: 0 11px; display: flex; align-items: center; gap: 9px;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--card);
+  font-size: 12.5px; color: var(--t3);
+}
+.ghost-btn {
+  position: relative; width: 32px; height: 32px; flex: none; justify-content: center;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--card); color: var(--t2);
+}
+.ghost-btn.sm { width: 28px; height: 28px; border-radius: 6px; }
+.dot-alert {
+  position: absolute; top: 6px; right: 7px; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--brand); border: 1.5px solid var(--card);
+}
+.primary-btn {
+  height: 32px; padding: 0 13px; gap: 7px; border-radius: 7px;
+  background: var(--brand); color: var(--brand-ink); font-size: 12.5px; font-weight: 500;
+}
+
+/* ---- tabs: navigation only, no period control ---------------------------- */
+.tabbar {
+  height: 46px; flex: none; padding: 0 28px; display: flex; align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.tabs { display: flex; gap: 24px; height: 100%; }
+.tab {
+  height: 100%; font-size: 13px; color: var(--t3);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab.active { color: var(--t1); font-weight: 500; border-bottom-color: var(--brand); }
+
+/* ---- page: two scoped bands, fixed height, no scroll --------------------
+   Height budget inside .page (1024 − 60 topbar − 46 tabbar − 34 padding = 884):
+     22 head + 10 + 178 now + 20 + 22 head + 12 + 106 kpis + 14 + 238 charts
+     + 14 = 636, leaving 248 for .lower, which takes the remainder.
+--------------------------------------------------------------------------- */
+.page {
+  flex: 1; min-height: 0; padding: 16px 28px 18px;
+  display: flex; flex-direction: column;
+}
+
+/* Band heading separates "now" data from date-filtered data. */
+.band-head { height: 22px; flex: none; display: flex; align-items: center; gap: 10px; }
+.band-head h2 {
+  font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--t2);
+}
+.band-head.hist { margin-top: 20px; justify-content: space-between; }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 6px; height: 20px; padding: 0 8px;
+  border-radius: 20px; border: 1px solid var(--line); background: var(--card);
+  font-size: 11px; color: var(--t3);
+}
+.tag i { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); }
+.tag.progress { color: var(--t2); border-color: #3a3222; background: #241f14; }
+.tag.progress i { background: none; border: 1.5px dashed var(--warn); width: 8px; height: 8px; }
+
+/* Compact filter cluster: range, currency and comparison sit together. */
+.filters { display: flex; align-items: center; gap: 8px; }
+.pill {
+  height: 28px; padding: 0 9px; gap: 6px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--card); font-size: 12px; color: var(--t1);
+}
+.pill svg { color: var(--t3); }
+.pill .sep { color: var(--t3); padding-left: 7px; border-left: 1px solid var(--line); }
+.pill-group { display: flex; }
+.pill-group .pill { border-radius: 0; margin-left: -1px; }
+.pill-group .pill:first-child { border-radius: 6px 0 0 6px; margin-left: 0; }
+.pill-group .pill:last-child { border-radius: 0 6px 6px 0; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  padding: var(--pad); display: flex; flex-direction: column; min-height: 0;
+}
+.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+h3 { font-size: 15px; font-weight: 600; letter-spacing: -.2px; color: var(--t1); }
+.meta { margin-top: 3px; font-size: 11.5px; color: var(--t3); }
+.link { font-size: 12px; color: var(--t2); gap: 4px; flex: none; }
+.foot {
+  margin-top: auto; padding-top: 10px; border-top: 1px solid var(--hair);
+  font-size: 11.5px; color: var(--t3);
+}
+
+/* ---- band 1: current position ------------------------------------------- */
+.now {
+  height: 178px; flex: none; margin-top: 10px;
+  display: grid; grid-template-columns: 300px 830px; gap: var(--gap);
+}
+.figure {
+  margin-top: 8px; font-size: 26px; line-height: 30px;
+  font-weight: 600; letter-spacing: -.8px; color: var(--t1);
+}
+.figure-sub { margin-top: 3px; font-size: 11.5px; color: var(--t3); }
+.rails { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--hair); }
+.rails li { display: flex; justify-content: space-between; height: 20px; align-items: center; font-size: 12px; }
+.rails b { font-weight: 500; color: var(--t1); }
+
+/* One tile per currency reads faster than a five-row table at this width. */
+.balances { margin-top: 11px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.balances li {
+  padding: 6px 9px 7px; border-radius: 6px;
+  background: var(--raise); border: 1px solid var(--hair);
+}
+.bal-top { display: flex; align-items: baseline; justify-content: space-between; }
+.bal-top strong { font-size: 12.5px; font-weight: 600; color: var(--t1); }
+.bal-top em { font-style: normal; font-size: 11px; color: var(--t3); }
+.bal-eur { display: block; margin-top: 3px; font-size: 14.5px; font-weight: 500; color: var(--t1); }
+.bal-native { display: block; margin-top: 1px; font-size: 11px; color: var(--t3); }
+.bal-track { margin-top: 5px; height: 3px; border-radius: 2px; background: var(--track); overflow: hidden; }
+.bal-track i { display: block; height: 3px; background: var(--brand-deep); }
+
+/* ---- band 2: historical performance ------------------------------------- */
+.kpis {
+  height: 106px; flex: none; margin-top: 12px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap);
+}
+.kpi {
+  padding: 14px 16px; border-radius: var(--r);
+  background: var(--card); border: 1px solid var(--line);
+}
+.kpi-label { font-size: 12.5px; font-weight: 500; color: var(--t2); }
+.kpi-value {
+  display: block; margin-top: 3px; font-size: 25px; line-height: 29px;
+  font-weight: 600; letter-spacing: -.8px; color: var(--t1);
+}
+.kpi-row { margin-top: 5px; display: flex; align-items: center; gap: 8px; font-size: 11.5px; }
+.kpi-delta { display: inline-flex; align-items: center; gap: 3px; font-weight: 500; }
+.kpi-delta.good { color: var(--brand); }
+.kpi-delta.flat { color: var(--t2); }
+.kpi-note { color: var(--t3); }
+
+.charts {
+  height: 238px; flex: none; margin-top: var(--gap);
+  display: grid; grid-template-columns: 700px 430px; gap: var(--gap);
+}
+.legend { display: flex; gap: 16px; margin: 8px 0 6px; font-size: 11.5px; color: var(--t3); }
+.legend li { display: flex; align-items: center; gap: 7px; }
+.swatch { width: 10px; height: 2px; border-radius: 2px; background: var(--brand); }
+.swatch.line-prev { height: 0; border-top: 2px dashed var(--t3); border-radius: 0; background: none; }
+.swatch.open {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--canvas);
+  border: 1.5px solid var(--brand);
+}
+.swatch.bar-base { width: 8px; height: 8px; border-radius: 2px; background: var(--brand-deep); }
+.swatch.bar-peak { width: 8px; height: 8px; border-radius: 2px; background: var(--brand); }
+.swatch.bar-partial {
+  width: 8px; height: 8px; border-radius: 2px; background: none;
+  border: 1px dashed var(--brand-deep);
+}
+.swatch.fail { width: 8px; height: 8px; border-radius: 2px; background: var(--fail); }
+
+.chart { display: block; overflow: visible; }
+.chart .grid { stroke: var(--hair); stroke-width: 1; }
+.chart .axis { fill: var(--t3); font-size: 10.5px; font-family: Inter, sans-serif; }
+.chart .axis.partial { fill: var(--t2); }
+.chart .series-now { fill: none; stroke: var(--brand); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .series-now.partial { stroke-dasharray: 3 3; }
+.chart .series-prev { fill: none; stroke: #5a5a5a; stroke-width: 1.5; stroke-dasharray: 4 4; stroke-linejoin: round; }
+.chart .dot { fill: var(--brand); }
+.chart .dot.open { fill: var(--card); stroke: var(--brand); stroke-width: 1.5; }
+.chart .bar { fill: var(--brand-deep); }
+.chart .bar.peak { fill: var(--brand); }
+.chart .bar.partial { fill: none; stroke: var(--brand-deep); stroke-width: 1; stroke-dasharray: 3 2; }
+
+.lower {
+  flex: 1; min-height: 0; margin-top: var(--gap);
+  display: grid; grid-template-columns: 358px 772px; gap: var(--gap);
+}
+
+.outcome-bar {
+  display: flex; gap: 2px; height: 8px; margin: 16px 0 14px;
+  border-radius: 4px; overflow: hidden; background: var(--track);
+}
+.outcome-bar i { display: block; height: 8px; }
+.outcome-bar .ok { background: var(--brand); }
+.outcome-bar .bad { background: var(--fail); }
+.outcome-legend li { display: flex; align-items: center; gap: 9px; height: 32px; }
+.outcome-legend .swatch { margin-top: 1px; }
+.outcome-legend div {
+  flex: 1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  font-size: 12px; color: var(--t2);
+}
+.outcome-legend b { display: flex; align-items: baseline; gap: 8px; font-weight: 500; color: var(--t1); }
+.outcome-legend em { font-style: normal; font-weight: 400; color: var(--t3); }
+
+/* ---- top merchants ------------------------------------------------------- */
+.merchants { margin-top: 8px; }
+.merchants li {
+  display: flex; align-items: center; gap: 12px; height: 32px;
+  border-bottom: 1px solid var(--hair);
+}
+.merchants li:last-child { border-bottom: 0; }
+.merchants .chip-avatar { width: 24px; height: 24px; font-size: 9.5px; }
+.rank { width: 12px; font-size: 11.5px; color: var(--t3); }
+.merchant-name { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 9px; }
+.merchant-name strong { font-size: 13px; font-weight: 500; color: var(--t1); }
+.merchant-name small { font-size: 11.5px; color: var(--t3); }
+.merchant-value { display: flex; align-items: baseline; gap: 10px; }
+.merchant-value strong { font-size: 13px; font-weight: 500; color: var(--t1); }
+.merchant-value small { width: 108px; text-align: right; font-size: 11.5px; color: var(--t3); }

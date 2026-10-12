@@ -1,0 +1,131 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+
+@font-face{font-family:Inter;src:url('/fonts/inter-400.ttf');font-weight:400;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-500.ttf');font-weight:500;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-600.ttf');font-weight:600;font-display:block}
+
+/* ---------- ground ----------
+   The original's two planes, darkened: a quieter navigation column and a
+   page it sits against. One green accent, used only for the identity mark
+   and the enabled switches. No cards, gradients or shadows. */
+:root{
+  --nav:#181818;
+  --page:#1c1c1c;
+  --line:#2b2b2b;        /* section separators, input and button borders */
+  --line-soft:#242424;   /* navigation group dividers */
+  --control:#212121;     /* input and button fills */
+  --text:#ededed;
+  --text-soft:#a0a0a0;   /* helper copy, unselected navigation */
+  --text-quiet:#787878;  /* group labels, row icons */
+  --green:#3ecf8e;
+}
+
+*{box-sizing:border-box}
+html,body,#root{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#101010;color:var(--text);
+  font:400 14px/20px Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+#root{display:grid;place-items:center}
+
+/* Fixed 1440x1024 artboard, scaled to fit the window by main.jsx. */
+.preview-frame{position:relative;overflow:hidden}
+.preview-artboard{width:1440px;height:1024px;transform-origin:top left}
+
+h1,h2,h3,p{margin:0}
+input{font:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:default}
+button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+.app{width:1440px;height:1024px;background:var(--page);display:flex}
+
+/* ---------- the shared identity mark ---------- */
+.avatar{display:grid;place-items:center;border-radius:50%;
+  background:rgba(62,207,142,.14);color:var(--green);flex:none}
+.avatar-sm{width:20px;height:20px}
+.avatar-lg{width:56px;height:56px}
+
+/* ---------- 240px settings navigation ---------- */
+.sidebar{width:240px;flex:none;background:var(--nav);
+  border-right:1px solid var(--line-soft);padding:28px 12px}
+
+.nav-group + .nav-group{margin-top:13px;padding-top:14px;
+  border-top:1px solid var(--line-soft)}
+
+.nav-label{font-size:11px;line-height:16px;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--text-quiet);
+  padding:0 10px;margin-bottom:6px}
+
+.nav-item{height:32px;display:flex;align-items:center;gap:10px;
+  padding:0 10px;border-radius:6px;color:var(--text-soft);font-size:14px}
+.nav-item svg{flex:none}
+.nav-item.is-selected{background:#262626;color:var(--text);font-weight:500}
+.nav-org{color:var(--text);font-weight:500}
+.nav-chevron{margin-left:auto;display:flex;color:var(--text-quiet)}
+.nav-logout{color:var(--text-soft)}
+.nav-logout svg{color:#d96a5c}
+
+/* ---------- main column ----------
+   Content starts 64px past the navigation and is held to 860px so the
+   measure stays readable and every control lines up on one right edge. */
+.main{flex:1;padding:56px 0 0 64px}
+.content{width:860px}
+
+.content h1{font-size:24px;line-height:32px;font-weight:500;letter-spacing:-.01em}
+.content section{margin-top:32px}
+.content section > h2,.section-head h2{font-size:16px;line-height:24px;font-weight:500}
+
+.content hr{height:1px;border:0;background:var(--line);margin:32px 0 0}
+
+.section-head{display:flex;align-items:center;justify-content:space-between}
+
+.link-action{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-soft)}
+
+/* ---------- Organization Profile ---------- */
+.logo-row{display:flex;align-items:center;gap:16px;margin-top:24px}
+
+.field{margin-top:28px}
+.field label{display:block;font-size:14px;line-height:20px;font-weight:500}
+.field-help{margin-top:2px;font-size:13px;line-height:20px;color:var(--text-soft)}
+.field input{display:block;width:100%;height:38px;margin-top:10px;
+  padding:0 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--control);color:var(--text);font-size:14px}
+
+/* ---------- setting rows ----------
+   Rows inside a section are separated by spacing alone; only the sections
+   themselves are ruled. */
+.row{display:flex;align-items:flex-start;gap:12px;margin-top:24px}
+.row-icon{display:flex;padding-top:1px;color:var(--text-quiet);flex:none}
+.row-text h3{font-size:14px;line-height:20px;font-weight:500}
+.row-text p{margin-top:2px;max-width:600px;font-size:13px;line-height:20px;color:var(--text-soft)}
+.row-action{margin-left:auto;padding-left:24px;display:flex;flex:none}
+
+.btn{height:30px;padding:0 12px;border:1px solid var(--line);border-radius:7px;
+  background:var(--control);font-size:13px;line-height:1;color:var(--text)}
+
+.switch{width:40px;height:22px;border-radius:11px;background:var(--green);
+  display:flex;align-items:center;padding:3px;justify-content:flex-end}
+.switch i{width:16px;height:16px;border-radius:50%;background:#10231a;display:block}
+
+.name-edit{display:flex;align-items:center;gap:12px;margin-top:10px}.name-edit input{margin-top:0;flex:1;min-width:0}.name-edit .btn{height:38px}.btn:disabled{opacity:.4}.profile-meta{display:flex;align-items:center;justify-content:space-between;margin-top:12px;color:var(--text-quiet);font-size:12px}.profile-meta .link-action{font-size:12px}.link-action:disabled{opacity:.6}.switch[aria-checked="false"]{background:#444;justify-content:flex-start}.switch[aria-checked="false"] i{background:#ddd}.save-feedback{min-height:20px;margin-top:18px;font-size:12px;color:var(--green)}
+
+/* Keep identity controls at a comfortable form width. */
+.content section:first-of-type{width:640px}
+.logo-row .row-text{flex:1;min-width:0}
+.logo-row .row-text p{max-width:380px}
+.logo-row .row-action{padding-left:16px}
+
+.name-edit{width:max-content}.name-edit input{width:320px;flex:none}
+
+.logo-row{display:grid;grid-template-columns:56px 1fr;column-gap:16px;row-gap:10px;align-items:start}.logo-row .avatar{grid-column:1;grid-row:1 / 3}.logo-row .row-text{grid-column:2}.logo-row .row-action{grid-column:2;margin-left:0;padding-left:0;justify-self:start}
+
+.logo-row .row-action{gap:8px}
+
+/* One compact alignment for settings and section dividers. */
+.content{width:640px}
+.row .row-text{flex:1;min-width:0}
+.row .row-action{padding-left:12px}
+
+.logo-button{display:inline-flex;align-items:center;gap:6px}
+
+/* Balance short descriptions to avoid isolated trailing words. */
+.row-text p{text-wrap:balance}
