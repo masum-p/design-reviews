@@ -1,0 +1,558 @@
+/* Claude research version. Every rule is scoped to .claude-research so older pages are untouched. */
+
+.claude-research {
+  --cr-ink: #0f172a;
+  --cr-text: #334155;
+  --cr-muted: #64748b;
+  --cr-faint: #94a3b8;
+  --cr-line: #e6eaf0;
+  --cr-line-soft: #eef1f5;
+  --cr-canvas: #f7f8fa;
+  --cr-brand: #2563eb;
+  --cr-brand-ink: #1d4ed8;
+  --cr-brand-soft: #eef4ff;
+  --cr-green: #2f7d4f;
+  --cr-amber: #9a6514;
+  min-height: 100vh;
+  background: var(--cr-canvas);
+  color: var(--cr-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.claude-research button {
+  cursor: pointer;
+}
+
+.claude-research button:focus-visible,
+.claude-research .cr-search:focus-within {
+  outline: 2px solid var(--cr-brand);
+  outline-offset: 2px;
+}
+
+.claude-research .cr-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Page frame: fixed 1440 x 900 desktop, sidebar is 240 wide. */
+.claude-research .cr-main {
+  margin-left: 240px;
+  height: 100vh;
+  min-height: 900px;
+  padding: 22px 28px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.claude-research .cr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 36px;
+}
+
+.claude-research .cr-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.claude-research .cr-title h1 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 650;
+  letter-spacing: -0.4px;
+  color: var(--cr-ink);
+}
+
+.claude-research .cr-tutorial {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--cr-muted);
+  border-radius: 6px;
+}
+
+.claude-research .cr-tutorial svg {
+  color: var(--cr-brand);
+}
+
+.claude-research .cr-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.claude-research .cr-search,
+.claude-research .cr-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--cr-line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  color: var(--cr-text);
+  white-space: nowrap;
+}
+
+.claude-research .cr-search {
+  width: 220px;
+  color: var(--cr-faint);
+}
+
+.claude-research .cr-search input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  outline: none;
+  color: var(--cr-ink);
+  font-size: 13px;
+}
+
+.claude-research .cr-search input::placeholder {
+  color: var(--cr-faint);
+}
+
+.claude-research .cr-control svg {
+  color: var(--cr-muted);
+}
+
+.claude-research .cr-primary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  margin-left: 8px;
+  border-radius: 8px;
+  background: var(--cr-brand);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Category tabs: one quiet underline row, counts and amounts kept together. */
+.claude-research .cr-tabs {
+  display: flex;
+  gap: 32px;
+  margin-top: 18px;
+  border-bottom: 1px solid var(--cr-line);
+}
+
+.claude-research .cr-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 0 2px 10px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  text-align: left;
+}
+
+.claude-research .cr-tab-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--cr-muted);
+}
+
+.claude-research .cr-tab-count {
+  min-width: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #eef1f5;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  color: var(--cr-muted);
+}
+
+.claude-research .cr-tab-amount {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--cr-text);
+}
+
+.claude-research .cr-tab-active {
+  border-bottom-color: var(--cr-brand);
+}
+
+.claude-research .cr-tab-active .cr-tab-label {
+  color: var(--cr-brand-ink);
+  font-weight: 600;
+}
+
+.claude-research .cr-tab-active .cr-tab-count {
+  background: var(--cr-brand-soft);
+  color: var(--cr-brand-ink);
+}
+
+.claude-research .cr-tab-active .cr-tab-amount {
+  color: var(--cr-ink);
+}
+
+/* Grid: three columns, two rows, all six cards fully visible. */
+.claude-research .cr-grid {
+  flex: 1;
+  min-height: 0;
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* Card: one flat surface, sections separated by space rather than nested boxes. */
+.claude-research .cr-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--cr-line);
+  border-radius: 12px;
+}
+
+.claude-research .cr-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.claude-research .cr-card-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.claude-research .cr-card-title h2 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--cr-ink);
+  letter-spacing: -0.15px;
+}
+
+.claude-research .cr-card-title p {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--cr-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.claude-research .cr-sep {
+  margin: 0 6px;
+  color: var(--cr-faint);
+}
+
+.claude-research .cr-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+  padding: 0 8px;
+  height: 20px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.claude-research .cr-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.claude-research .cr-status-draft {
+  background: #f1f3f6;
+  color: #556274;
+}
+
+.claude-research .cr-status-pending {
+  background: #fdf4e3;
+  color: var(--cr-amber);
+}
+
+.claude-research .cr-status-accepted {
+  background: #ebf6ef;
+  color: var(--cr-green);
+}
+
+.claude-research .cr-more {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 22px;
+  margin: 0 -6px 0 0;
+  border-radius: 6px;
+  color: var(--cr-faint);
+}
+
+.claude-research .cr-more:hover {
+  background: #f1f3f6;
+  color: var(--cr-text);
+}
+
+/* Money */
+.claude-research .cr-money {
+  margin-top: 12px;
+}
+
+.claude-research .cr-total span {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--cr-muted);
+}
+
+.claude-research .cr-total strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--cr-ink);
+}
+
+.claude-research .cr-figures {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.claude-research .cr-figures dt {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--cr-muted);
+  white-space: nowrap;
+}
+
+.claude-research .cr-figures dd {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--cr-text);
+  white-space: nowrap;
+}
+
+.claude-research .cr-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.claude-research .cr-progress-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--cr-line-soft);
+  overflow: hidden;
+}
+
+.claude-research .cr-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #5aa774;
+}
+
+.claude-research .cr-progress-value {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--cr-text);
+}
+
+/* Estimate and invoice lines: one consistent three-column table per card. */
+.claude-research .cr-lines {
+  margin-top: 12px;
+  border-top: 1px solid var(--cr-line);
+}
+
+.claude-research .cr-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 72px;
+  align-items: center;
+  gap: 12px;
+  height: 25px;
+  border-bottom: 1px solid var(--cr-line-soft);
+  font-size: 12px;
+}
+
+.claude-research .cr-line > span:first-child {
+  color: var(--cr-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.claude-research .cr-line strong {
+  font-weight: 500;
+  color: var(--cr-text);
+}
+
+.claude-research .cr-line-estimate > span:first-child,
+.claude-research .cr-line-estimate strong {
+  font-weight: 600;
+  color: var(--cr-ink);
+}
+
+.claude-research .cr-line-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cr-muted);
+}
+
+.claude-research .cr-tone-paid,
+.claude-research .cr-tone-accepted {
+  color: var(--cr-green);
+}
+
+.claude-research .cr-tone-pending {
+  color: var(--cr-amber);
+}
+
+.claude-research .cr-tone-draft {
+  color: var(--cr-muted);
+}
+
+/* Invoice action sits under the billing it extends. */
+.claude-research .cr-card-foot {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.claude-research .cr-ready {
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--cr-green);
+}
+
+.claude-research .cr-invoice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 32px;
+  border: 1px solid var(--cr-line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cr-brand-ink);
+  white-space: nowrap;
+}
+
+.claude-research .cr-invoice:hover {
+  background: var(--cr-brand-soft);
+}
+
+.claude-research .cr-invoice-ready {
+  border-color: #c9dafb;
+  background: var(--cr-brand-soft);
+  font-weight: 600;
+}
+/* QA: original project, ID and date must remain readable rather than ellipsized. */
+.claude-research .cr-card-head{position:relative;display:block;min-height:56px}
+.claude-research .cr-card-title h2{padding-right:90px}
+.claude-research .cr-card-title p{white-space:normal;overflow:visible;text-overflow:clip;max-width:none;margin-top:4px;font-size:11px}
+.claude-research .cr-card-head>.cr-status{position:absolute;right:26px;top:0}
+.claude-research .cr-card-head>.cr-more{position:absolute;right:0;top:0}
+.claude-research .cr-line>span:first-child{overflow:visible;text-overflow:clip;white-space:normal}
+.claude-research{width:1440px;min-width:1440px;min-height:900px;margin:0 auto;position:relative}
+.claude-research>aside{left:auto;width:240px}
+.claude-research .cr-main{width:1200px;height:900px;min-height:900px}
+
+/* Neutral reference palette: color and surface overrides only. No geometry changes below. */
+.claude-research {
+  --cr-ink: #333333;
+  --cr-text: #333333;
+  --cr-muted: #777777;
+  --cr-faint: #a3a3a3;
+  --cr-line: #eaeaea;
+  --cr-line-soft: #f0f0f0;
+  --cr-canvas: #f6f6f6;
+  --cr-brand: #454545;
+  --cr-brand-ink: #454545;
+  --cr-brand-soft: #eaeaea;
+  --cr-control: #ffffff;
+  --cr-card: #ffffff;
+  --cr-green: #2f7d4f;
+  --cr-amber: #9a6514;
+}
+
+/* Header controls: light neutral gray, orange primary. */
+.claude-research .cr-search,
+.claude-research .cr-control {
+  background: var(--cr-control);
+  border-color: var(--cr-line);
+}
+.claude-research .cr-search input { color: var(--cr-text); }
+.claude-research .cr-control:hover { background: #ededed; }
+.claude-research .cr-primary { background: var(--cr-brand); color: #ffffff; }
+.claude-research .cr-primary:hover { background: #eeeeee; }
+.claude-research .cr-tutorial:hover { color: var(--cr-brand); }
+
+/* Tabs */
+.claude-research .cr-tab-count { background: #efefef; color: var(--cr-muted); }
+.claude-research .cr-tab-active { border-bottom-color: var(--cr-brand); }
+.claude-research .cr-tab-active .cr-tab-label { color: var(--cr-brand); }
+.claude-research .cr-tab-active .cr-tab-count { background: var(--cr-brand-soft); color: var(--cr-brand); }
+.claude-research .cr-tab-active .cr-tab-amount { color: var(--cr-text); }
+
+/* Cards */
+.claude-research .cr-card { background: var(--cr-card); border-color: var(--cr-line); }
+.claude-research .cr-status-draft { background: #efefef; color: #5f5f5f; }
+.claude-research .cr-more:hover { background: #efefef; color: var(--cr-text); }
+
+/* Invoice actions read as orange links on a neutral surface. */
+.claude-research .cr-invoice { background: #ffffff; border-color: var(--cr-line); color: var(--cr-brand); }
+.claude-research .cr-invoice:hover { background: var(--cr-brand-soft); }
+.claude-research .cr-invoice-ready { background: var(--cr-brand-soft); border-color: #e5e5e5; color: var(--cr-brand); }
+
+/* Shared sidebar: scoped overrides for its Tailwind slate/brand classes. */
+.claude-research > aside { background: var(--cr-canvas); border-color: var(--cr-line); }
+.claude-research > aside .border-line { border-color: var(--cr-line); }
+.claude-research > aside .bg-ink { background: var(--cr-brand-soft); color: var(--cr-brand); }
+.claude-research > aside .text-ink,
+.claude-research > aside .text-slate-700 { color: var(--cr-text); }
+.claude-research > aside .text-slate-600 { color: #555555; }
+.claude-research > aside .text-slate-500 { color: var(--cr-muted); }
+.claude-research > aside .bg-slate-100 { background: #eeeeee; }
+.claude-research > aside .bg-brand-soft { background: var(--cr-brand-soft); }
+.claude-research > aside .text-brand-ink,
+.claude-research > aside .text-brand-ink svg { color: var(--cr-brand); }
+
+.claude-research .cr-primary{background:#fff;color:#444;box-shadow:inset 0 0 0 1px #e5e5e5}
+.claude-research .cr-tab-active{background:#eaeaea;border-bottom-color:#c8c8c8}

@@ -1,0 +1,291 @@
+/* Projects, Gantt view (v6, GitHub Primer light colours). Layout and type sizes from v5.
+   Type: 25 / 14 / 12 / 11px. Text: fg.default #1f2328, fg.muted #59636e (>= 5.7:1 on white and canvas.subtle).
+   Semantics: accent = under way / today, success = done, attention = needs attention or date conflict. */
+.gx-page{
+  --left:494px;
+  --fg:#1f2328;--fg-muted:#59636e;
+  --canvas:#ffffff;--canvas-subtle:#f6f8fa;
+  --border:#d1d9e0;--border-muted:#d1d9e0b3;
+  --neutral-muted:#818b981f;--hover:#818b9814;
+  --accent:#0969da;--accent-subtle:#ddf4ff;--accent-border:#54aeff66;
+  --success:#1a7f37;--success-emphasis:#1f883d;--success-subtle:#dafbe1;--success-border:#4ac26b66;
+  --attention:#9a6700;--attention-emphasis:#bf8700;--attention-subtle:#fff8c5;--attention-border:#d4a72c66;
+  --underline:#fd8c73;
+  /* Main canvas is white, like GitHub's repository and Projects pages; boxes are drawn by 1px borders. */
+  background:var(--canvas);color:var(--fg);min-height:1200px
+}
+.gx-page .gx-main{padding-top:16px}
+.gx-page h1{font-weight:600;color:var(--fg)}
+.gx-page,.gx-page button{font-weight:400}
+.gx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Sidebar: Primer NavList look, scoped to this page only. */
+.notion-research.gx-page>aside{background:var(--canvas-subtle);border-right:1px solid var(--border);color:var(--fg)}
+.gx-page aside .text-ink,.gx-page aside .text-slate-600,.gx-page aside .text-slate-700{color:var(--fg)}
+.gx-page aside .text-slate-500{color:var(--fg-muted)}
+.gx-page aside svg{color:var(--fg-muted)}
+.gx-page aside nav p{color:var(--fg-muted);font-weight:400}
+.gx-page aside .bg-ink{background:var(--fg);color:#fff}
+.gx-page aside .bg-ink svg{color:#fff}
+.gx-page aside li{border-radius:6px;position:relative;color:var(--fg)}
+.gx-page aside li:hover{background:var(--hover)}
+.notion-research.gx-page aside [aria-current="page"]{background:#818b9826;color:var(--fg)}
+.notion-research.gx-page aside [aria-current="page"] svg{color:var(--fg)}
+.gx-page aside li .tabular-nums{min-width:20px;padding:0 6px;border-radius:999px;background:var(--neutral-muted);color:var(--fg);font-size:12px;line-height:18px;text-align:center}
+.gx-page aside .border-t{border-color:var(--border)}
+.gx-page aside .bg-slate-100{background:var(--neutral-muted);color:var(--fg)}
+
+/* Shared control states */
+.gx-page button{cursor:pointer;transition:background-color .12s,color .12s,box-shadow .12s}
+.gx-page button:focus-visible,.gx-task:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gx-page button:disabled{opacity:.5;cursor:not-allowed;background:transparent;color:#818b98}
+.gx-text-btn{height:32px;padding:0 8px;border-radius:6px;font-size:12px;color:var(--fg-muted)}
+.gx-page .gx-text-btn:hover:not(:disabled){background:var(--hover);color:var(--fg)}
+.gx-page .gx-text-btn:active:not(:disabled){background:var(--neutral-muted)}
+.gx-page .nr-tutorial{margin-left:-8px;color:var(--fg-muted)}
+.gx-page .gx-text-btn svg,.gx-page .gx-views svg{color:var(--fg-muted)}
+/* Primer primary button */
+.notion-research.gx-page .gx-primary{height:32px;padding:0 12px;font-size:12px;border-radius:6px;background:var(--success-emphasis);color:#fff;box-shadow:none;border:1px solid #1f883d26}
+.notion-research.gx-page .gx-primary svg{color:#fff}
+.notion-research.gx-page .gx-primary:hover:not(:disabled){background:#1c8139;box-shadow:none}
+.notion-research.gx-page .gx-primary:active:not(:disabled){background:#197935}
+.gx-icon-btn{width:28px;height:28px;border-radius:6px;color:var(--fg-muted);position:relative}
+.gx-page .gx-icon-btn:hover:not(:disabled){background:var(--hover);color:var(--fg)}
+.gx-page .gx-icon-btn:active:not(:disabled){background:var(--neutral-muted)}
+
+/* View switcher: Primer UnderlineNav. */
+.gx-viewbar{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--border);margin:8px 0 16px}
+.gx-views{display:flex;gap:4px}
+.gx-page .gx-views button{height:36px;padding:0 12px;gap:8px;font-size:12px;color:var(--fg-muted);position:relative;border-radius:6px 6px 0 0}
+.gx-page .gx-views button:hover:not([aria-current]){color:var(--fg);background:var(--hover)}
+.gx-page .gx-views button:active{background:var(--neutral-muted)}
+.gx-page .gx-views [aria-current]{color:var(--fg)}
+.gx-page .gx-views [aria-current] svg{color:var(--fg)}
+.gx-page .gx-views [aria-current]:after{content:'';position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--underline);border-radius:6px}
+/* Primer Label (success) for Beta */
+.gx-views small{font-size:11px;line-height:16px;color:var(--success);border:1px solid #4ac26b;border-radius:999px;padding:0 6px}
+.gx-tools{display:flex;gap:4px;padding-bottom:4px}
+
+/* Today briefing */
+.gx-brief{display:grid;grid-template-columns:1fr 1fr;background:var(--canvas);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;box-shadow:0 1px 1px #1f23280a}
+.gx-brief-col{padding:8px 16px;min-width:0}
+.gx-brief-col+.gx-brief-col{border-left:1px solid var(--border)}
+.gx-brief h2{display:flex;align-items:center;gap:8px;height:32px;margin:0;font-size:12px;color:var(--fg)}
+/* Primer Counter */
+.gx-brief h2 span{min-width:20px;height:18px;padding:0 6px;border-radius:999px;background:var(--neutral-muted);color:var(--fg);font-size:12px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
+.gx-brief ul{margin:0;padding:0;list-style:none}
+.gx-brief li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:12px;height:32px;font-size:12px;color:var(--fg)}
+.gx-brief li+li{border-top:1px solid var(--border-muted)}
+.gx-brief-task{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gx-brief-task small{font-size:11px;color:var(--fg-muted)}
+.gx-brief-meta{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--fg-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.gx-page .gx-warn-icon{color:var(--attention)}
+
+/* Schedule card */
+.gx-card{background:var(--canvas);border:1px solid var(--border);border-radius:12px;overflow:hidden;color:var(--fg);box-shadow:0 1px 1px #1f23280a}
+
+/* Grid: every row is one track of [task details | timeline lane]. */
+.gx-head-row,.gx-task,.gx-group-head{display:grid;grid-template-columns:var(--left) calc(var(--col) * var(--days))}
+.gx-cells{display:grid;grid-template-columns:minmax(0,1fr) 56px 112px;gap:16px;align-items:center;padding:0 16px;border-right:1px solid var(--border);min-width:0}
+.gx-head{background:var(--canvas-subtle);border-bottom:1px solid var(--border)}
+.gx-colheads{align-self:stretch;align-items:end;padding-bottom:12px;font-size:11px;color:var(--fg-muted)}
+.gx-axis{display:flex;flex-direction:column}
+.gx-axis-top{display:flex;align-items:center;justify-content:space-between;height:32px;padding:0 12px;border-bottom:1px solid var(--border)}
+.gx-axis-top strong{font-size:12px;color:var(--fg)}
+.gx-legend{display:flex;align-items:center;gap:16px;margin:0;padding:0;list-style:none;font-size:11px;color:var(--fg-muted)}
+.gx-legend li{display:flex;align-items:center;gap:8px}
+.gx-key-conflict{display:block;width:20px;height:10px;border-radius:3px;background:repeating-linear-gradient(135deg,#d4a72c80 0 2px,var(--attention-subtle) 2px 5px);outline:1px dashed var(--attention-emphasis);outline-offset:-1px}
+.gx-days{display:grid;grid-template-columns:repeat(var(--days),var(--col));height:40px}
+.gx-days>span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:16px}
+.gx-days small{font-size:11px;color:var(--fg-muted)}
+.gx-days b{min-width:24px;height:18px;padding:0 4px;display:grid;place-items:center;border-radius:6px;font-size:12px;color:var(--fg);font-variant-numeric:tabular-nums}
+.gx-days .gx-weekend{background:var(--neutral-muted)}
+.gx-days .gx-weekend b{color:var(--fg-muted)}
+.gx-days .gx-today small{color:var(--accent)}
+.gx-days .gx-today b{background:var(--accent);color:#fff}
+
+/* Body overlay. Multiply blend: weekend columns read as canvas.subtle on white rows and still
+   darken correctly under row and header hover tints. */
+.gx-body{position:relative}
+.gx-overlay{position:absolute;top:0;bottom:0;left:var(--left);width:calc(var(--col) * var(--days));pointer-events:none;z-index:1;mix-blend-mode:multiply}
+.gx-shade{position:absolute;top:0;bottom:0;width:var(--col);background:var(--canvas-subtle)}
+.gx-week-line{position:absolute;top:0;bottom:0;width:1px;background:var(--border-muted)}
+.gx-now{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--accent);border-radius:1px}
+
+/* Project header (Primer Box-header): one calm line, tools on hover or focus. */
+.gx-group+.gx-group{border-top:1px solid var(--border)}
+.gx-group-head{height:48px;background:var(--canvas-subtle);border-bottom:1px solid var(--border);transition:background-color .12s}
+.gx-group:last-child .gx-group-head{border-bottom:0}
+.gx-group-title{display:flex;align-items:center;gap:4px;padding:0 16px 0 8px;border-right:1px solid var(--border);min-width:0}
+.gx-group-title .gx-toggle{color:var(--fg-muted)}
+.gx-group-title h2{display:flex;align-items:baseline;gap:8px;font-size:14px;line-height:24px;font-weight:600;letter-spacing:-.2px;color:var(--fg);margin:0;white-space:nowrap}
+.gx-group-title h2>span:last-child{font-size:12px;font-weight:400;color:var(--fg-muted);letter-spacing:0}
+.gx-sep{color:var(--border);font-weight:400}
+.gx-facts{display:flex;align-items:center;gap:16px;margin-left:auto;white-space:nowrap}
+.gx-finish{font-size:12px;color:var(--fg-muted);cursor:help}
+.gx-finish b{color:var(--fg);font-variant-numeric:tabular-nums}
+.gx-done{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--fg-muted);font-variant-numeric:tabular-nums}
+/* Primer ProgressBar */
+.gx-done i{display:block;width:32px;height:6px;border-radius:6px;background:var(--neutral-muted);overflow:hidden}
+.gx-done em{display:block;height:100%;background:var(--success-emphasis)}
+.gx-actions{display:flex;align-items:center;justify-content:flex-end;gap:4px;padding-right:12px;position:relative;z-index:2}
+.gx-reveal{display:flex;align-items:center;gap:4px;padding-left:8px;opacity:0;transition:opacity .12s}
+.gx-group-head:hover,.gx-group-head:focus-within,.gx-group-head.gx-preview{background-image:linear-gradient(var(--hover),var(--hover))}
+.gx-group-head:hover .gx-reveal,.gx-group-head:focus-within .gx-reveal,.gx-preview .gx-reveal{opacity:1}
+.gx-tabs{display:flex;gap:4px;align-self:stretch;align-items:center}
+.gx-page .gx-tabs button{height:28px;padding:0 8px;border-radius:6px;font-size:12px;color:var(--fg-muted);position:relative}
+.gx-page .gx-tabs button:hover:not([aria-current]){background:var(--hover);color:var(--fg)}
+.gx-page .gx-tabs button:active{background:var(--neutral-muted)}
+.gx-page .gx-tabs [aria-current]{color:var(--fg)}
+.gx-page .gx-tabs [aria-current]:after{content:'';position:absolute;left:8px;right:8px;bottom:-10px;height:2px;background:var(--underline);border-radius:6px}
+.gx-divider{width:1px;height:16px;background:var(--border);margin:0 4px}
+.gx-apps small{position:absolute;top:-2px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#e3e7eb;color:var(--fg);font-size:11px;line-height:16px}
+
+/* Task rows */
+.gx-rows{position:relative}
+.gx-task{height:var(--row);border-bottom:1px solid var(--border-muted);font-size:12px;outline-offset:-2px!important}
+.gx-task:hover,.gx-task:focus-visible{background:var(--canvas-subtle)}
+.gx-task-cell{display:flex;align-items:center;gap:12px;min-width:0}
+.gx-avatar{width:24px;height:24px;border-radius:50%;display:block;object-fit:cover;flex-shrink:0;box-shadow:0 0 0 1px #1f23281a}
+.gx-name{color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:-4px}
+.gx-marker{display:inline-flex;flex-shrink:0;cursor:help}
+.gx-marker-warn{color:var(--attention)}
+.gx-marker-now{color:var(--accent)}
+.gx-pct{display:flex;align-items:center;justify-content:flex-end;gap:4px;color:var(--fg);font-variant-numeric:tabular-nums}
+.gx-pct-zero{color:var(--fg-muted)}
+.gx-pct-done{color:var(--success)}
+.gx-dates{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--fg)}
+
+/* Bars: neutral = not started, accent = under way (fill = % done), success = done,
+   attention = overdue / late start, attention hatch = end date before start. */
+.gx-lane{position:relative}
+.gx-bar{position:absolute;top:10px;height:20px;border-radius:6px;background:var(--canvas-subtle);box-shadow:inset 0 0 0 1px var(--border);overflow:hidden;display:flex;align-items:center;z-index:2;transition:box-shadow .12s}
+.gx-bar>i{position:absolute;inset:0 auto 0 0;background:var(--accent)}
+.gx-bar>span{position:relative;display:flex;align-items:center;gap:4px;padding-left:4px;font-size:11px;color:var(--fg);white-space:nowrap}
+.gx-bar-progress{background:var(--accent-subtle);box-shadow:inset 0 0 0 1px var(--accent-border)}
+.gx-bar-done{background:var(--success-emphasis);box-shadow:none}
+.gx-bar-done>i{background:var(--success-emphasis)}
+.gx-bar-done>span{color:#fff}
+.gx-bar-warn{background:var(--attention-subtle);box-shadow:inset 0 0 0 1px var(--attention-border)}
+/* Primer attention base (#d4a72c) rather than emphasis, so a clipped bar's dark label reads evenly across fill and track. */
+.gx-bar-warn>i{background:#d4a72c}
+.gx-bar-conflict{background:repeating-linear-gradient(135deg,#d4a72c80 0 3px,var(--attention-subtle) 3px 8px);box-shadow:none;outline:1px dashed var(--attention-emphasis);outline-offset:-1px}
+.gx-bar-clipped{border-top-left-radius:0;border-bottom-left-radius:0}
+.gx-task:hover .gx-bar,.gx-task:focus-visible .gx-bar{box-shadow:inset 0 0 0 1.5px var(--fg-muted)}
+.gx-task:hover .gx-bar-conflict,.gx-task:focus-visible .gx-bar-conflict{box-shadow:none;outline:1.5px dashed var(--attention)}
+.gx-earlier{position:absolute;left:4px;top:10px;height:20px;padding:0 4px;display:flex;align-items:center;gap:4px;font-size:11px;color:var(--fg-muted);background:var(--canvas);border-radius:6px;z-index:2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.gx-task:hover .gx-earlier,.gx-task:focus-visible .gx-earlier{background:var(--canvas-subtle);color:var(--fg)}
+.gx-links{position:absolute;top:0;left:var(--left);pointer-events:none;z-index:2}
+
+/* One line everywhere: text never wraps; long names end in an ellipsis and show in full on hover. */
+.gx-page :is(h1,h2,h3,p,span,small,strong,b,button,li,a,label){white-space:nowrap}
+.gx-trunc{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gx-brief-task{display:flex;align-items:baseline;gap:8px;min-width:0;overflow:hidden}
+.gx-brief-task>.gx-trunc:first-child{flex:0 1 auto}
+.gx-brief-task>small.gx-trunc{flex:0 100 auto}
+.gx-group-title h2{min-width:0;overflow:hidden}
+.gx-group-title h2>.gx-trunc:first-child{flex:0 1 auto}
+.gx-group-title h2>.gx-trunc:last-child{flex:0 100 auto}
+.gx-group-title .gx-facts{flex-shrink:0}
+
+/* Column labels in caps, matching the sidebar section labels. */
+.gx-colheads [role="columnheader"]{text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:11px;color:var(--fg-muted)}
+
+/* No bold labels. Hierarchy comes from size and colour; only the page title,
+   project names and the BRICK logo keep weight. */
+.gx-page :is(b,strong,h2,h3,small,label,button,span,li,p,em,a,nav,[role="columnheader"]){font-weight:400}
+.gx-page .gx-group-title h2>.gx-trunc:first-child{font-weight:600}
+.gx-page h1{font-weight:600}
+.gx-page aside .font-bold{font-weight:700}
+.gx-page .gx-views [aria-current],.gx-page .gx-views [aria-current] *,.gx-page .gx-days .gx-today small,.gx-page .gx-days .gx-today b,.gx-page .gx-axis-top strong,.gx-page .gx-finish b,.gx-page .gx-primary,.gx-page .gx-primary *{font-weight:400}
+
+/* Neutral grey palette (from Masum's reference): pure greys, no blue tint.
+   Page #f6f6f6, white cards, borders #ebebeb, inner surfaces #fcfcfc,
+   dividers/tracks #f1f1f1, active nav #ebebeb. Primer accents stay for meaning. */
+.gx-page{
+  --fg:#262626;--fg-muted:#6b6b6b;
+  --canvas:#ffffff;--canvas-subtle:#fcfcfc;
+  --border:#ebebeb;--border-muted:#f1f1f1;
+  --neutral-muted:#f1f1f1;--hover:#00000005;
+  background:#f6f6f6;
+}
+.notion-research.gx-page>aside{background:#f6f6f6;border-right-color:transparent}
+.notion-research.gx-page aside [aria-current="page"]{background:#ebebeb}
+.gx-page .gx-brief,.gx-page .gx-card{background:#ffffff;border-color:#ebebeb;box-shadow:none}
+.gx-page .gx-card .gx-days .gx-weekend{background:#fafafa}
+.gx-page .gx-shade{background:#fafafa}
+.gx-page .gx-bar-normal{background:#ffffff}
+
+/* Today panel headings share the column-label style: uppercase, muted, regular weight. */
+.gx-page .gx-brief h2{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:400}
+.gx-page .gx-brief h2 span{text-transform:none;letter-spacing:0}
+.gx-page .gx-bar-normal{box-shadow:inset 0 0 0 1px #d9d9d9}
+
+/* Assignee column: photo + short name, full name on hover and for screen readers. */
+.gx-page{--left:578px}
+.gx-cells{grid-template-columns:minmax(0,1fr) 112px 56px 112px;gap:12px}
+.gx-who{display:flex;align-items:center;gap:8px;min-width:0;font-size:12px;color:var(--fg)}
+.gx-who .gx-avatar{width:20px;height:20px}
+.gx-who>.gx-trunc{min-width:0}
+body:has(.gx-page){background:#f6f6f6}
+
+/* Synced with the Timeline view (src/projects-timeline.css), which is the reference for shared chrome. */
+/* Page top: same padding, breadcrumb, title gap and view bar offset, so both top areas match pixel for pixel. */
+.gx-page .gx-main{padding-top:12px}
+.gx-breadcrumb{display:flex;align-items:center;gap:2px;margin:0 0 4px -6px;font-size:12px;color:var(--fg-muted)}
+.gx-breadcrumb>span{margin-left:6px;color:var(--fg)}
+.gx-page .nr-page-head{margin-bottom:8px}
+.gx-viewbar{margin:0 0 16px}
+.gx-page .gx-icon-sm{width:24px;height:24px}
+
+/* Full assignee names. Day columns are 29px (21 x 29 = 609) so uppercase weekdays have air;
+   the table keeps 557px so task and worker names stay whole. */
+.gx-page{--left:557px}
+.gx-cells{grid-template-columns:minmax(0,1fr) 124px 48px 104px}
+
+/* Group header tools are always visible, as on the Timeline. The block takes the
+   header surface so the today line passes behind it, never through the tab labels. */
+.gx-actions{gap:4px;padding-left:8px;background:var(--canvas-subtle)}
+.gx-group-head .gx-actions{align-self:stretch}
+
+/* Progress label: "1/6 completed", same type as the Timeline's "Completed tasks". */
+.gx-done{font-size:11px;color:#555}
+
+/* Day header: weekday uppercase, letter-spaced, muted like the Timeline lane headers; today in light blue. */
+/* Day cells are 28px wide, so the weekday keeps the uppercase style without extra letter-spacing. */
+.gx-days small{font-size:11px;letter-spacing:0;text-transform:uppercase;color:var(--fg-muted)}
+.gx-days>span{border-radius:6px;margin:4px 0}
+.gx-days{height:48px}
+.gx-page .gx-card .gx-days .gx-today{background:#ddf4ff}
+.gx-days .gx-today small,.gx-days .gx-today b{color:#0969da}
+.gx-days .gx-today b{background:transparent}
+
+/* One card per project, matching the Timeline view's project cards. */
+.gx-cards{display:flex;flex-direction:column;gap:16px}
+.gx-project{background:#ffffff;border:1px solid #ebebeb;border-radius:12px;overflow:hidden;color:var(--fg)}
+.gx-page .gx-project .gx-days .gx-weekend{background:#fafafa}
+.gx-page .gx-project .gx-days .gx-today{background:#ddf4ff}
+
+/* Card header: same row as the Timeline card (name / service left, actions right).
+   The chevron stays: it is the Gantt's collapse control. Facts sit right-aligned before
+   the actions so Planned finish and progress line up at the same x on every card. */
+.gx-project-head{display:flex;align-items:center;gap:8px;min-height:36px;padding:12px 12px 0 8px}
+.gx-project-head .gx-toggle{color:var(--fg-muted)}
+.gx-project-head h2{display:flex;align-items:baseline;gap:8px;min-width:0;overflow:hidden;margin:0;font-size:14px;line-height:24px;letter-spacing:-.2px;color:var(--fg)}
+.gx-project-head h2>.gx-trunc:first-child{flex:0 1 auto;font-weight:600}
+.gx-project-head h2>.gx-trunc:last-child{flex:0 100 auto;font-size:12px;color:var(--fg-muted);letter-spacing:0}
+.gx-project-head .gx-facts{margin-left:auto;gap:16px}
+.gx-project-head .gx-actions{background:transparent;padding:0;align-self:center;margin-left:8px}
+.gx-collapsed-note{font-size:11px;color:var(--fg-muted)}
+.gx-project-collapsed .gx-project-head{padding-bottom:12px}
+.gx-project-collapsed .gx-actions{margin-left:auto}
+
+/* Tab row under the header, as on the Timeline; the rule runs full width to meet the grid header. */
+.gx-ptabs{display:flex;gap:4px;margin-top:4px;padding:0 16px;border-bottom:1px solid #ebebeb}
+.gx-page .gx-ptabs button{height:32px;padding:0 8px;border-radius:6px 6px 0 0;font-size:12px;color:var(--fg-muted);position:relative}
+.gx-page .gx-ptabs button:hover:not([aria-current]){background:#00000008;color:var(--fg)}
+.gx-page .gx-ptabs button:active{background:var(--neutral-muted)}
+.gx-page .gx-ptabs [aria-current]{color:var(--fg)}
+.gx-page .gx-ptabs [aria-current]:after{content:'';position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--underline);border-radius:6px}
+.gx-project .gx-rows .gx-task:last-child{border-bottom:0}
+.gx-page .gx-cards{gap:8px}

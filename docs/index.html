@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design reviews · Masum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; background: #0f0f0f; color: #c8c5bf; font: 14px/1.5 Inter, system-ui, sans-serif; display: grid; place-items: center; }
+  main { width: min(720px, calc(100% - 48px)); padding: 64px 0; }
+  h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; margin: 0 0 6px; color: #dcdcdc; }
+  p.lead { margin: 0 0 32px; color: #8d8a85; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  a.card { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; border: 1px solid #ffffff1a; border-radius: 10px; background: #171717; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
+  a.card:hover { border-color: #ffffff33; background: #1c1c1c; }
+  a.card:focus-visible { outline: 2px solid #7fbfae; outline-offset: 2px; }
+  .t { font-weight: 500; color: #dcdcdc; }
+  .d { font-size: 13px; color: #8d8a85; }
+  .arrow { color: #7fbfae; font-size: 18px; }
+  footer { margin-top: 32px; font-size: 12px; color: #6b6965; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Design reviews</h1>
+  <p class="lead">Static desktop screens (1440px). Open each on a laptop or desktop browser.</p>
+  <ul>
+    <li><a class="card" href="./paymie/"><span><span class="t">Paymie · Analytics</span><br><span class="d">Dark analytics dashboard in Foglamp colours with Linear-style texture</span></span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a class="card" href="./brick/?view=projects-gantt-ux"><span><span class="t">BRICK Construction · Projects, Gantt view</span><br><span class="d">Schedule across jobs with today's starts and items needing attention</span></span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a class="card" href="./brick/?view=projects"><span><span class="t">BRICK Construction · Projects, Timeline view</span><br><span class="d">Day-by-day project lanes with crew, notes and deadlines</span></span><span class="arrow" aria-hidden="true">→</span></a></li>
+  </ul>
+  <footer>Mock data only. Built with React, Vite and Tailwind.</footer>
+</main>
+</body>
+</html>

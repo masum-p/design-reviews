@@ -1,0 +1,5 @@
+node_modules
+dist
+.DS_Store
+# Private Hugeicons Pro license token: never commit
+.npmrc

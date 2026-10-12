@@ -1,0 +1,117 @@
+.notion-research{width:1440px;min-width:1440px;min-height:900px;margin:auto;position:relative;background:#fff;color:#30343b;font-size:13px}
+.notion-research>aside{left:auto;width:216px;background:#f7f7f5;border-color:#ebece9}
+.notion-research .nr-main{margin-left:216px;padding:22px 28px 24px;width:1224px}
+.notion-research button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;background:transparent;white-space:nowrap}
+.notion-research .nr-page-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.notion-research .nr-page-head>div{display:flex;align-items:center;gap:18px}
+.notion-research h1{font-size:25px;line-height:34px;letter-spacing:-.7px;font-weight:650;margin:0}
+.notion-research .nr-tutorial{font-size:12px;color:#737780}
+.notion-research .nr-primary{background:#306be5;color:white;border-radius:6px;height:34px;padding:0 13px;font-size:12px;font-weight:550}
+.notion-research .nr-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.notion-research .nr-toolbar label{display:flex;align-items:center;gap:8px;color:#7b7f86}
+.notion-research .nr-toolbar input{border:0;outline:none;background:transparent;width:240px;font-size:12px;padding:7px 0}
+.notion-research .nr-toolbar>div{display:flex;gap:8px}
+.notion-research .nr-toolbar button{height:32px;border:1px solid #e4e5e7;border-radius:6px;padding:0 10px;font-size:12px;color:#555c67}
+.notion-research .nr-tabs{display:flex;align-items:stretch;border-bottom:1px solid #e7e8ea;margin-bottom:18px;gap:27px}
+.notion-research .nr-tabs button{justify-content:flex-start;gap:12px;padding:5px 0 13px;color:#717681;font-size:12px;position:relative}
+.notion-research .nr-tabs button>span{display:flex;align-items:center;gap:6px}
+.notion-research .nr-tabs small{font-size:10px;background:#f0f1f2;padding:0 5px;border-radius:4px;color:#737984}
+.notion-research .nr-tabs strong{font-size:13px;font-weight:550;color:#4b525c;font-variant-numeric:tabular-nums}
+.notion-research .nr-tabs [aria-current]{color:#242a33;font-weight:600}
+.notion-research .nr-tabs [aria-current]:after{content:'';height:2px;background:#303843;position:absolute;bottom:-1px;left:0;right:0}
+.notion-research .nr-showing{margin-left:auto;align-self:center;padding-bottom:8px;font-size:11px;color:#7f858e}
+.notion-research .nr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.notion-research .nr-card{border:1px solid #e2e5e9;border-radius:9px;min-width:0;height:334px;display:flex;flex-direction:column;padding:16px 17px 0;background:#fff;box-shadow:0 1px 2px #15203604}
+.notion-research .nr-card-head{display:flex;justify-content:space-between;align-items:flex-start}
+.notion-research h2{font-size:15px;line-height:20px;font-weight:600;margin:0;letter-spacing:-.2px}
+.notion-research .nr-card-head p{font-size:12px;color:#656d78;margin:3px 0 0;line-height:17px}
+.notion-research .nr-more{color:#7f8791;padding:0;width:22px;height:22px}
+.notion-research .nr-meta{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10px;line-height:16px;color:#78818c}
+.notion-research .nr-meta time{padding-left:8px;border-left:1px solid #e2e5e9}
+.notion-research .nr-status{margin-left:auto;color:#666f7b;display:inline-flex;align-items:center;gap:4px}
+.notion-research .nr-status:before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+.notion-research .nr-status.accepted{color:#387554}.notion-research .nr-status.pending{color:#96702f}
+.notion-research .nr-value{display:flex;justify-content:space-between;align-items:center;margin:13px 0 10px}
+.notion-research .nr-value>div:first-child{display:flex;align-items:baseline;gap:10px}
+.notion-research .nr-value span{font-size:10px;color:#737c88}
+.notion-research .nr-value strong{font-size:23px;font-weight:550;letter-spacing:-.65px;font-variant-numeric:tabular-nums;line-height:29px}
+.notion-research .nr-progress{width:42px;text-align:right}
+.notion-research .nr-progress>span{font-size:10px;color:#5d6877}
+.notion-research .nr-progress i{display:block;height:3px;background:#ecefee;border-radius:4px;margin-top:4px;overflow:hidden}
+.notion-research .nr-progress b{display:block;height:3px;background:#78a78b}
+.notion-research .nr-finances{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;margin:0 0 12px;font-size:11px;line-height:17px}
+.notion-research .nr-finances>div{display:flex;justify-content:space-between;gap:4px}
+.notion-research .nr-finances dt{color:#7a828d;font-size:10px}
+.notion-research .nr-finances dd{margin:0;font-weight:500;color:#46515e;font-variant-numeric:tabular-nums}
+.notion-research .nr-ledger{border-top:1px solid #eceef0;padding-top:5px}
+.notion-research .nr-ledger-row{display:grid;grid-template-columns:1fr auto 14px;align-items:center;gap:7px;font-size:11px;line-height:18px;padding:3px 0;color:#6f7986}
+.notion-research .nr-ledger-row strong{font-weight:450;color:#4e5967;font-variant-numeric:tabular-nums}
+.notion-research .nr-estimate{color:#45505e;font-weight:500}
+.notion-research .nr-ledger-row .paid{color:#5d9371}.notion-research .nr-ledger-row .pending{color:#b69250}
+.notion-research .nr-card-foot{margin:auto -17px 0;min-height:40px;padding:8px 17px;border-top:1px solid #eceef0;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;gap:3px}
+.notion-research .nr-card-foot button{color:#3869b5;font-size:11px;line-height:18px;font-weight:500;padding:0;white-space:normal;text-align:left}
+.notion-research .nr-ready{font-size:10px;color:#617367}
+.notion-research .nr-work-group h3{font-size:12px;font-weight:600;color:#404b58;margin:0 0 10px;display:flex;align-items:center;gap:12px}
+.notion-research .nr-work-group h3>span{font-size:11px;font-weight:400;color:#79838e}
+.notion-research .nr-work-group+.nr-work-group{margin-top:20px}
+.notion-research .nr-preparation .nr-card{height:245px}
+.notion-research .nr-card{height:343px}
+.notion-research .nr-meta{font-size:11px}
+.notion-research .nr-finances{font-size:12px;gap:6px 13px}
+.notion-research .nr-finances dt{font-size:11px}
+.notion-research .nr-ledger-row{font-size:12px;padding:4px 0}
+.notion-research .nr-value>div:first-child{flex-direction:column;gap:0}
+.notion-research .nr-value span{font-size:11px}
+.notion-research .nr-value{margin-top:12px;margin-bottom:10px}
+.notion-research .nr-card-foot button{font-size:12px}
+.notion-research .nr-card-head p{font-size:12px}
+.notion-research .nr-preparation .nr-card{height:278px}
+.notion-research .nr-card{height:356px}
+.notion-research .nr-main{padding-top:16px;padding-bottom:16px}
+.notion-research .nr-work-group+.nr-work-group{margin-top:16px}
+/* Reference palette only: geometry and typography are intentionally unchanged. */
+.notion-research{background:#f6f6f6;color:#333;--color-ink:#333;--color-line:#eaeaea;--color-brand:#454545;--color-brand-ink:#555555;--color-brand-soft:#eaeaea}
+.notion-research>aside{background:#f6f6f6;border-color:#eaeaea}
+.notion-research aside .text-slate-500,.notion-research aside .text-slate-600{color:#777}
+.notion-research aside [aria-current="page"]{background:#eaeaea;color:#454545}
+.notion-research aside [aria-current="page"] svg{color:#454545}
+.notion-research aside .bg-ink{background:#eaeaea;color:#454545}
+.notion-research .nr-card{background:#ffffff;border-color:#eaeaea;box-shadow:none}
+.notion-research .nr-primary{background:#ffffff;color:#444;box-shadow:inset 0 0 0 1px #e5e5e5}
+.notion-research .nr-toolbar button{background:#ffffff;border-color:#ebebeb;color:#555}
+.notion-research .nr-tabs,.notion-research .nr-ledger,.notion-research .nr-card-foot{border-color:#eaeaea}
+.notion-research .nr-tabs [aria-current],.notion-research .nr-tabs [aria-current] strong{color:#454545}
+.notion-research .nr-tabs [aria-current]:after{background:#454545}
+.notion-research .nr-tabs [aria-current] small{background:#eaeaea;color:#454545}
+.notion-research .nr-tabs small{background:#efefef;color:#777}
+.notion-research .nr-card-foot button{color:#555555}
+.notion-research .nr-tutorial,.notion-research .nr-toolbar label,.notion-research .nr-meta,.notion-research .nr-card-head p,.notion-research .nr-finances dt,.notion-research .nr-value span,.notion-research .nr-work-group h3>span,.notion-research .nr-showing{color:#777}
+.notion-research .nr-tabs strong,.notion-research .nr-finances dd,.notion-research .nr-ledger-row strong,.notion-research .nr-estimate,.notion-research .nr-work-group h3{color:#444}
+.notion-research .nr-ledger-row{color:#777}
+.notion-research :focus-visible{outline-color:#454545}
+
+.notion-research .nr-tabs [aria-current]{background:#eaeaea}
+.notion-research .nr-tabs [aria-current]:after{background:#c8c8c8}
+/* More comfortable card rhythm; preserve the established typography and palette. */
+.notion-research .nr-card{height:auto;min-height:410px;padding:22px 20px 0}
+.notion-research .nr-preparation .nr-card{height:auto;min-height:322px}
+.notion-research .nr-card-head p{margin-top:6px}
+.notion-research .nr-meta{margin-top:14px}
+.notion-research .nr-value{margin-top:18px;margin-bottom:16px}
+.notion-research .nr-finances{row-gap:10px;margin-bottom:18px}
+.notion-research .nr-ledger{padding-top:8px}
+.notion-research .nr-ledger-row{padding:6px 0}
+.notion-research .nr-card-foot{margin:16px -20px 0;padding:12px 20px;min-height:46px}
+.notion-research .nr-card-foot{margin-top:auto}
+.notion-research .nr-ledger{margin-bottom:16px}
+.notion-research .nr-progress{width:96px;flex-shrink:0}
+.notion-research .nr-progress i,.notion-research .nr-progress b{height:4px}
+.notion-research .nr-page-head>.nr-header-actions{gap:8px}
+.notion-research .nr-header-actions>button:not(.nr-primary){height:34px;border:1px solid #ebebeb;border-radius:6px;padding:0 10px;font-size:12px;background:#fff;color:#555}
+
+/* Annotated refinement: quiet header controls and clearer section separation. */
+.notion-research .nr-header-actions>button:not(.nr-primary){background:transparent;border-color:transparent}
+.notion-research .nr-tabs button{padding:10px 14px;gap:12px}
+.notion-research .nr-tabs{gap:10px;margin-bottom:30px}
+.notion-research .nr-work-group+.nr-work-group{margin-top:32px}
+.notion-research>aside nav li{height:28.8px;padding-top:4.4px;padding-bottom:4.4px}
