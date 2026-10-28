@@ -110,19 +110,22 @@
     return { fetchedAt: new Date().toISOString(), period: { start: days[77], end }, weeksStart: start, gapDays, packages };
   }
 
+  // npm's rate-limit reply has no CORS header, so the browser reports it as a
+  // network error rather than a 429. Treat both as "wait and try again".
   async function getJson(url) {
-    for (let attempt = 0; attempt < 5; attempt++) {
-      const r = await fetch(url, { cache: "no-store" });
-      if (r.status === 429) { await sleep(3000 * (attempt + 1)); continue; }
-      if (!r.ok) throw new Error(`npm answered ${r.status}`);
-      return r.json();
+    for (let attempt = 0; attempt < 6; attempt++) {
+      let r = null;
+      try { r = await fetch(url); } catch (e) { r = null; }
+      if (r && r.ok) return r.json();
+      if (r && r.status !== 429 && r.status < 500) throw new Error(`npm answered ${r.status}`);
+      await sleep(2500 * (attempt + 1));
     }
-    throw new Error("npm is rate limiting requests");
+    throw new Error("npm is busy");
   }
 
   function setStatus(msg, err) { const s = $("status"); s.textContent = msg; s.classList.toggle("err", !!err); }
 
-  let busy = false;
+  let busy = false, liveLoaded = false;
   async function refresh() {
     if (busy) return;
     busy = true;
@@ -137,25 +140,22 @@
       setStatus("Loading from npm…");
       const bulk = await getJson(`${API}${start}:${end}/${unscoped.join(",")}`);
       for (const p of unscoped) raw[p] = bulk[p] ? bulk[p].downloads : [];
-      let done = 0, next = 0;
-      async function worker() {
-        while (next < scoped.length) {
-          const p = scoped[next++];
-          raw[p] = (await getJson(`${API}${start}:${end}/${p}`)).downloads || [];
-          done++;
-          setStatus(`Loading from npm… ${done} of ${scoped.length}`);
-          await sleep(250);
-        }
+      for (let i = 0; i < scoped.length; i++) {
+        await sleep(700);
+        raw[scoped[i]] = (await getJson(`${API}${start}:${end}/${scoped[i]}`)).downloads || [];
+        setStatus(`Loading from npm… ${i + 1} of ${scoped.length}`);
       }
-      await Promise.all([worker(), worker(), worker()]);
       const daily = {};
       for (const p in raw) { daily[p] = {}; for (const x of raw[p]) daily[p][x.day] = x.downloads; }
       const data = build(daily, start, end);
+      liveLoaded = true;
       load(data);
       try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch (e) {}
       setStatus("Up to date with npm.");
     } catch (e) {
-      setStatus(`Couldn't load from npm (${e.message}). Showing the last saved numbers; try again in a minute.`, true);
+      setStatus(state.data
+        ? `npm is busy right now, so these are the last saved numbers. Try Reload in a minute.`
+        : `npm is busy right now. Try Reload in a minute.`, true);
     } finally {
       busy = false;
       btn.disabled = false;
@@ -164,10 +164,13 @@
 
   $("refresh").addEventListener("click", refresh);
 
-  // Show the last numbers this browser loaded right away, then fetch fresh ones.
-  try {
-    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
-    if (cached && cached.packages) load(cached);
-  } catch (e) {}
+  // Show the newest saved numbers right away (this browser's last load, or the
+  // copy the daily GitHub job saves), then fetch live ones from npm.
+  let cached = null;
+  try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) {}
+  if (cached && cached.packages) load(cached);
+  fetch("data.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : null).then((d) => {
+    if (d && d.packages && !liveLoaded && (!state.data || d.fetchedAt > state.data.fetchedAt)) load(d);
+  }).catch(() => {});
   refresh();
 })();
