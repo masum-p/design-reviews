@@ -58,7 +58,8 @@ header p { color: var(--muted); margin: 0; max-width: 62ch; }
 .status.err { color: var(--down); }
 button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .note { margin-top: 16px; background: var(--warn-soft); color: var(--warn); border-radius: 6px; padding: 8px 12px; font-size: 13px; max-width: 80ch; }
-.kpis { margin-top: 20px; display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 12px; }
+.kpis { margin-top: 20px; display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: 12px; }
+@media (max-width: 560px) { .kpis { grid-template-columns: 1fr; } }
 .kpi { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
 .kpi.main { background: var(--hl-soft); border-color: transparent; }
 .kpi-label { font: 500 11px var(--body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
@@ -67,7 +68,6 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid 
 .kpi.main .kpi-value { font-size: 34px; }
 .kpi-value.up { color: var(--up); } .kpi-value.down { color: var(--down); }
 .kpi-sub { font: 12px var(--mono); color: var(--muted); overflow-wrap: anywhere; }
-@media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } .kpi.main { grid-column: 1 / -1; } }
 .board { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; min-width: 640px; }
 th { font: 500 11px var(--body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -118,26 +118,16 @@ footer a { color: var(--accent); }
     </div>
   </header>
 
-  <section class="kpis" id="kpis" aria-label="Total downloads">
+  <section class="kpis" id="kpis" aria-label="Market and Hugeicons share">
+    <div class="kpi">
+      <div class="kpi-label">React icon market, one day</div>
+      <div class="kpi-value" id="k-market">–</div>
+      <div class="kpi-sub" id="k-market-sub">&nbsp;</div>
+    </div>
     <div class="kpi main">
-      <div class="kpi-label">Total downloads, latest day</div>
-      <div class="kpi-value" id="k-day">–</div>
-      <div class="kpi-sub" id="k-day-sub">&nbsp;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Total weekly downloads</div>
-      <div class="kpi-value" id="k-week">–</div>
-      <div class="kpi-sub" id="k-week-sub">&nbsp;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">vs previous week</div>
-      <div class="kpi-value" id="k-change">–</div>
-      <div class="kpi-sub" id="k-prev">&nbsp;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Most downloaded</div>
-      <div class="kpi-value" id="k-top">–</div>
-      <div class="kpi-sub" id="k-top-sub">&nbsp;</div>
+      <div class="kpi-label">Hugeicons share</div>
+      <div class="kpi-value" id="k-share">–</div>
+      <div class="kpi-sub" id="k-share-sub">&nbsp;</div>
     </div>
   </section>
 
@@ -167,6 +157,6 @@ footer a { color: var(--accent); }
   </footer>
 </div>
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

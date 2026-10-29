@@ -48,29 +48,22 @@
 
   const compact = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "K" : String(n);
 
-  // Top stats strip: totals across every library in the table.
+  // Top stats: the whole market (every library's main package) on the latest day
+  // npm has counted, and Hugeicons' share of it.
   function renderKpis(d) {
-    const libs = d.packages.filter((p) => p.primary).sort((a, b) => b.lastWeek - a.lastWeek);
-    const n = libs.length ? libs[0].weekly.length : 0;
-    const week = libs.reduce((s, p) => s + p.lastWeek, 0);
-    const prev = libs.reduce((s, p) => s + (p.weekly[n - 2] || 0), 0);
-    const short = (s) => fdate(s).replace(/, \d{4}$/, "");
-    if (d.latestDay && libs.some((p) => p.lastDay != null)) {
-      $("k-day").textContent = fmt.format(libs.reduce((s, p) => s + (p.lastDay || 0), 0));
-      $("k-day-sub").textContent = `${short(d.latestDay)} · ${libs.length} libraries`;
-    } else { $("k-day").textContent = "–"; $("k-day-sub").textContent = "Loading from npm…"; }
-    $("k-week").textContent = fmt.format(week);
-    $("k-week-sub").textContent = `${short(d.period.start)} – ${short(d.period.end)}`;
-    const kc = $("k-change");
-    if (prev) {
-      const c = (week - prev) / prev;
-      kc.textContent = (c >= 0 ? "+" : "") + (c * 100).toFixed(1) + "%";
-      kc.className = "kpi-value " + (c >= 0 ? "up" : "down");
-      $("k-prev").textContent = `${c >= 0 ? "+" : "−"}${compact(Math.abs(week - prev))} from ${compact(prev)}`;
-    } else { kc.textContent = "–"; kc.className = "kpi-value"; $("k-prev").textContent = " "; }
-    if (libs.length) {
-      $("k-top").textContent = libs[0].library;
-      $("k-top-sub").textContent = `${compact(libs[0].lastWeek)} a week · ${((libs[0].lastWeek / (week || 1)) * 100).toFixed(1)}% of total`;
+    const libs = d.packages.filter((p) => p.primary);
+    const me = libs.find((p) => p.library === HIGHLIGHT);
+    if (!(d.latestDay && libs.some((p) => p.lastDay != null))) {
+      $("k-market").textContent = "–"; $("k-market-sub").textContent = "Loading from npm…";
+      $("k-share").textContent = "–"; $("k-share-sub").textContent = " ";
+      return;
+    }
+    const market = libs.reduce((s, p) => s + (p.lastDay || 0), 0);
+    $("k-market").textContent = fmt.format(market);
+    $("k-market-sub").textContent = `downloads on ${fdate(d.latestDay)} · ${libs.length} libraries`;
+    if (me && market) {
+      $("k-share").textContent = ((me.lastDay / market) * 100).toFixed(2) + "%";
+      $("k-share-sub").textContent = `${fmt.format(me.lastDay)} downloads of ${me.package}`;
     }
   }
 
