@@ -58,6 +58,16 @@ header p { color: var(--muted); margin: 0; max-width: 62ch; }
 .status.err { color: var(--down); }
 button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .note { margin-top: 16px; background: var(--warn-soft); color: var(--warn); border-radius: 6px; padding: 8px 12px; font-size: 13px; max-width: 80ch; }
+.kpis { margin-top: 20px; display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 12px; }
+.kpi { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.kpi.main { background: var(--hl-soft); border-color: transparent; }
+.kpi-label { font: 500 11px var(--body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.kpi.main .kpi-label { color: var(--hl); }
+.kpi-value { font: 800 26px/1.15 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.kpi.main .kpi-value { font-size: 34px; }
+.kpi-value.up { color: var(--up); } .kpi-value.down { color: var(--down); }
+.kpi-sub { font: 12px var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } .kpi.main { grid-column: 1 / -1; } }
 .board { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; min-width: 640px; }
 th { font: 500 11px var(--body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -108,7 +118,29 @@ footer a { color: var(--accent); }
     </div>
   </header>
 
-  <div class="note" id="gapnote" hidden></div>
+  <section class="kpis" id="kpis" aria-label="Hugeicons this week">
+    <div class="kpi main">
+      <div class="kpi-label">Hugeicons weekly downloads</div>
+      <div class="kpi-value" id="k-total">–</div>
+      <div class="kpi-sub" id="k-split">All Hugeicons npm packages combined</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">vs previous week</div>
+      <div class="kpi-value" id="k-change">–</div>
+      <div class="kpi-sub" id="k-prev">&nbsp;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Rank</div>
+      <div class="kpi-value" id="k-rank">–</div>
+      <div class="kpi-sub" id="k-rank-sub">&nbsp;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Share of React icon downloads</div>
+      <div class="kpi-value" id="k-share">–</div>
+      <div class="kpi-sub" id="k-share-sub">&nbsp;</div>
+    </div>
+  </section>
+
 
   <div class="board">
     <table>
@@ -135,6 +167,6 @@ footer a { color: var(--accent); }
   </footer>
 </div>
 
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>

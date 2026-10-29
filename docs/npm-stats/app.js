@@ -46,9 +46,41 @@
     return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path class="area" d="${area}"/><path class="line" d="${line}"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.2"/></svg>`;
   }
 
+  const compact = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "K" : String(n);
+
+  // Top stats strip: Hugeicons across all its npm packages, plus where it ranks.
+  function renderKpis(d) {
+    const mine = d.packages.filter((p) => p.library === HIGHLIGHT).sort((a, b) => b.lastWeek - a.lastWeek);
+    const n = mine.length ? mine[0].weekly.length : 0;
+    const total = mine.reduce((s, p) => s + p.lastWeek, 0);
+    const prev = mine.reduce((s, p) => s + (p.weekly[n - 2] || 0), 0);
+    $("k-total").textContent = fmt.format(total);
+    $("k-split").textContent = mine.map((p) => `${p.package} ${compact(p.lastWeek)}`).join(" · ");
+    const kc = $("k-change");
+    if (prev) {
+      const c = (total - prev) / prev;
+      kc.textContent = (c >= 0 ? "+" : "") + (c * 100).toFixed(1) + "%";
+      kc.className = "kpi-value " + (c >= 0 ? "up" : "down");
+      $("k-prev").textContent = `${c >= 0 ? "+" : "−"}${fmt.format(Math.abs(total - prev))} from ${fmt.format(prev)}`;
+    } else { kc.textContent = "–"; kc.className = "kpi-value"; $("k-prev").textContent = " "; }
+    const primaries = d.packages.filter((p) => p.primary).sort((a, b) => b.lastWeek - a.lastWeek);
+    const idx = primaries.findIndex((p) => p.library === HIGHLIGHT);
+    const all = primaries.reduce((s, p) => s + p.lastWeek, 0) || 1;
+    if (idx >= 0) {
+      const me = primaries[idx];
+      $("k-rank").textContent = `#${idx + 1}`;
+      $("k-rank-sub").textContent = idx > 0
+        ? `of ${primaries.length} · ${compact(primaries[idx - 1].lastWeek - me.lastWeek)} behind ${primaries[idx - 1].library}`
+        : `of ${primaries.length} libraries`;
+      $("k-share").textContent = ((me.lastWeek / all) * 100).toFixed(1) + "%";
+      $("k-share-sub").textContent = `${me.package} of ${compact(all)} total`;
+    }
+  }
+
   function render() {
     const d = state.data;
     if (!d) return;
+    renderKpis(d);
     let list = d.packages.filter((p) => p.primary);
     list = list.slice().sort((a, b) => state.sort === "change"
       ? (change(b) ?? -Infinity) - (change(a) ?? -Infinity)
@@ -81,13 +113,7 @@
   function load(d) {
     state.data = d;
     const at = new Date(d.fetchedAt).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
-    $("meta").textContent = `Week of ${fdate(d.period.start)} – ${fdate(d.period.end)} · fetched ${at}`;
-    const gaps = (d.gapDays || []).filter((g) => g >= d.weeksStart && g <= d.period.end);
-    const note = $("gapnote");
-    if (gaps.length) {
-      note.hidden = false;
-      note.textContent = `npm has no counts yet for ${gaps.length} day${gaps.length > 1 ? "s" : ""} in this window (${gaps.map((g) => fdate(g).replace(/, \d{4}$/, "")).join(", ")}), so weeks containing them read low. npmjs.com shows the same numbers; they rise once npm fills those days in.`;
-    } else note.hidden = true;
+    $("meta").textContent = `Last updated ${at}`;
     render();
   }
 
