@@ -48,32 +48,29 @@
 
   const compact = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "K" : String(n);
 
-  // Top stats strip: Hugeicons across all its npm packages, plus where it ranks.
+  // Top stats strip: totals across every library in the table.
   function renderKpis(d) {
-    const mine = d.packages.filter((p) => p.library === HIGHLIGHT).sort((a, b) => b.lastWeek - a.lastWeek);
-    const n = mine.length ? mine[0].weekly.length : 0;
-    const total = mine.reduce((s, p) => s + p.lastWeek, 0);
-    const prev = mine.reduce((s, p) => s + (p.weekly[n - 2] || 0), 0);
-    $("k-total").textContent = fmt.format(total);
-    $("k-split").textContent = mine.map((p) => `${p.package} ${compact(p.lastWeek)}`).join(" · ");
+    const libs = d.packages.filter((p) => p.primary).sort((a, b) => b.lastWeek - a.lastWeek);
+    const n = libs.length ? libs[0].weekly.length : 0;
+    const week = libs.reduce((s, p) => s + p.lastWeek, 0);
+    const prev = libs.reduce((s, p) => s + (p.weekly[n - 2] || 0), 0);
+    const short = (s) => fdate(s).replace(/, \d{4}$/, "");
+    if (d.latestDay && libs.some((p) => p.lastDay != null)) {
+      $("k-day").textContent = fmt.format(libs.reduce((s, p) => s + (p.lastDay || 0), 0));
+      $("k-day-sub").textContent = `${short(d.latestDay)} · ${libs.length} libraries`;
+    } else { $("k-day").textContent = "–"; $("k-day-sub").textContent = "Loading from npm…"; }
+    $("k-week").textContent = fmt.format(week);
+    $("k-week-sub").textContent = `${short(d.period.start)} – ${short(d.period.end)}`;
     const kc = $("k-change");
     if (prev) {
-      const c = (total - prev) / prev;
+      const c = (week - prev) / prev;
       kc.textContent = (c >= 0 ? "+" : "") + (c * 100).toFixed(1) + "%";
       kc.className = "kpi-value " + (c >= 0 ? "up" : "down");
-      $("k-prev").textContent = `${c >= 0 ? "+" : "−"}${fmt.format(Math.abs(total - prev))} from ${fmt.format(prev)}`;
+      $("k-prev").textContent = `${c >= 0 ? "+" : "−"}${compact(Math.abs(week - prev))} from ${compact(prev)}`;
     } else { kc.textContent = "–"; kc.className = "kpi-value"; $("k-prev").textContent = " "; }
-    const primaries = d.packages.filter((p) => p.primary).sort((a, b) => b.lastWeek - a.lastWeek);
-    const idx = primaries.findIndex((p) => p.library === HIGHLIGHT);
-    const all = primaries.reduce((s, p) => s + p.lastWeek, 0) || 1;
-    if (idx >= 0) {
-      const me = primaries[idx];
-      $("k-rank").textContent = `#${idx + 1}`;
-      $("k-rank-sub").textContent = idx > 0
-        ? `of ${primaries.length} · ${compact(primaries[idx - 1].lastWeek - me.lastWeek)} behind ${primaries[idx - 1].library}`
-        : `of ${primaries.length} libraries`;
-      $("k-share").textContent = ((me.lastWeek / all) * 100).toFixed(1) + "%";
-      $("k-share-sub").textContent = `${me.package} of ${compact(all)} total`;
+    if (libs.length) {
+      $("k-top").textContent = libs[0].library;
+      $("k-top-sub").textContent = `${compact(libs[0].lastWeek)} a week · ${((libs[0].lastWeek / (week || 1)) * 100).toFixed(1)}% of total`;
     }
   }
 
@@ -123,6 +120,7 @@
     for (let s = start; s <= end; s = addDays(s, 1)) days.push(s);
     const ref = daily[REF_PKG] || {};
     const gapDays = days.filter((d) => !ref[d]);
+    const latestDay = days.filter((d) => ref[d]).pop() || end;
     const packages = PACKAGES.map(([library, pkg, primary]) => {
       const m = daily[pkg] || {};
       const weekly = [];
@@ -131,9 +129,9 @@
         for (let k = 0; k < 7; k++) sum += m[days[w * 7 + k]] || 0;
         weekly.push(sum);
       }
-      return { library, package: pkg, primary: !!primary, lastWeek: weekly[11], weekly };
+      return { library, package: pkg, primary: !!primary, lastWeek: weekly[11], weekly, lastDay: m[latestDay] || 0 };
     }).sort((a, b) => b.lastWeek - a.lastWeek);
-    return { fetchedAt: new Date().toISOString(), period: { start: days[77], end }, weeksStart: start, gapDays, packages };
+    return { fetchedAt: new Date().toISOString(), period: { start: days[77], end }, weeksStart: start, latestDay, gapDays, packages };
   }
 
   // npm's rate-limit reply has no CORS header, so the browser reports it as a

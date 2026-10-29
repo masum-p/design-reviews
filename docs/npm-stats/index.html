@@ -118,11 +118,16 @@ footer a { color: var(--accent); }
     </div>
   </header>
 
-  <section class="kpis" id="kpis" aria-label="Hugeicons this week">
+  <section class="kpis" id="kpis" aria-label="Total downloads">
     <div class="kpi main">
-      <div class="kpi-label">Hugeicons weekly downloads</div>
-      <div class="kpi-value" id="k-total">–</div>
-      <div class="kpi-sub" id="k-split">All Hugeicons npm packages combined</div>
+      <div class="kpi-label">Total downloads, latest day</div>
+      <div class="kpi-value" id="k-day">–</div>
+      <div class="kpi-sub" id="k-day-sub">&nbsp;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total weekly downloads</div>
+      <div class="kpi-value" id="k-week">–</div>
+      <div class="kpi-sub" id="k-week-sub">&nbsp;</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">vs previous week</div>
@@ -130,14 +135,9 @@ footer a { color: var(--accent); }
       <div class="kpi-sub" id="k-prev">&nbsp;</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Rank</div>
-      <div class="kpi-value" id="k-rank">–</div>
-      <div class="kpi-sub" id="k-rank-sub">&nbsp;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Share of React icon downloads</div>
-      <div class="kpi-value" id="k-share">–</div>
-      <div class="kpi-sub" id="k-share-sub">&nbsp;</div>
+      <div class="kpi-label">Most downloaded</div>
+      <div class="kpi-value" id="k-top">–</div>
+      <div class="kpi-sub" id="k-top-sub">&nbsp;</div>
     </div>
   </section>
 
@@ -167,6 +167,6 @@ footer a { color: var(--accent); }
   </footer>
 </div>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
