@@ -1,0 +1,142 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+
+@font-face{font-family:Inter;src:url('/fonts/inter-400.ttf');font-weight:400;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-500.ttf');font-weight:500;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-600.ttf');font-weight:600;font-display:block}
+
+/* ---------- ground ----------
+   Three neutral planes instead of two: the page the navigation sits on,
+   one raised canvas that holds the whole of General, and the compact
+   groups inside it. Nothing is tinted; the single green accent still only
+   marks identity and the enabled switches. */
+:root{
+  --page:#101010;        /* page behind navigation and canvas */
+  --canvas:#1a1a1a;      /* the raised settings surface */
+  --canvas-line:#282828;
+  --group:#202020;       /* bordered groups inside the canvas */
+  --group-line:#2e2e2e;
+  --divider:#292929;     /* hairline between rows of one group */
+  --control:#272727;     /* input and button fills */
+  --control-line:#363636;
+  --text:#ededed;
+  --text-soft:#a2a2a2;   /* helper copy, unselected navigation */
+  --text-quiet:#7a7a7a;  /* group labels, row icons */
+  --green:#3ecf8e;
+}
+
+*{box-sizing:border-box}
+html,body,#root{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#0a0a0a;color:var(--text);
+  font:400 14px/20px Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+#root{display:grid;place-items:center}
+
+/* Fixed 1440x1024 artboard, scaled to fit the window by main.jsx. */
+.preview-frame{position:relative;overflow:hidden}
+.preview-artboard{width:1440px;height:1024px;transform-origin:top left}
+
+h1,h2,h3,p{margin:0}
+input{font:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:default}
+button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+.app{width:1440px;height:1024px;background:var(--page);display:flex}
+
+/* ---------- the shared identity mark ---------- */
+.avatar{display:grid;place-items:center;border-radius:50%;
+  background:rgba(62,207,142,.14);color:var(--green);flex:none}
+.avatar-sm{width:20px;height:20px}
+.avatar-lg{width:56px;height:56px}
+
+/* ---------- 240px settings navigation ----------
+   The navigation stays on the page itself, so the canvas beside it is
+   read as the thing being edited. No divider is needed: the canvas edge
+   already separates them. */
+.sidebar{width:240px;flex:none;padding:28px 12px}
+
+.nav-group + .nav-group{margin-top:13px;padding-top:14px;
+  border-top:1px solid #1f1f1f}
+
+.nav-label{font-size:11px;line-height:16px;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--text-quiet);
+  padding:0 10px;margin-bottom:6px}
+
+.nav-item{height:32px;display:flex;align-items:center;gap:10px;
+  padding:0 10px;border-radius:7px;color:var(--text-soft);font-size:14px}
+.nav-item svg{flex:none}
+.nav-item.is-selected{background:#242424;color:var(--text);font-weight:500}
+.nav-org{color:var(--text);font-weight:500}
+.nav-chevron{margin-left:auto;display:flex;color:var(--text-quiet)}
+.nav-logout{color:var(--text-soft)}
+.nav-logout svg{color:#d96a5c}
+
+/* ---------- the canvas ----------
+   One 880x984 surface carrying every section of General. The lift is a
+   border and a soft shadow only, so the page stays flat and neutral. */
+.main{flex:1;display:flex;justify-content:center;padding:20px 0}
+.canvas{width:880px;height:984px;padding:32px 40px;
+  background:var(--canvas);border:1px solid var(--canvas-line);
+  border-radius:20px;box-shadow:0 14px 34px -18px rgba(0,0,0,.75)}
+
+.canvas h1{font-size:24px;line-height:32px;font-weight:500;letter-spacing:-.01em;
+  margin-bottom:22px}
+
+/* ---------- sections ----------
+   The heading and its one line of orientation sit outside the box, on the
+   canvas; only the settings are enclosed. */
+.section{margin-bottom:28px}
+.section:last-child{margin-bottom:0}
+.section-head{margin-bottom:12px}
+.section-head h2{font-size:15px;line-height:22px;font-weight:600;letter-spacing:-.005em}
+.section-head p{margin-top:2px;font-size:13px;line-height:20px;color:var(--text-quiet)}
+
+.group{background:var(--group);border:1px solid var(--group-line);border-radius:12px}
+
+/* Rows share one grid: quiet 36px icon, text at a readable measure, and
+   the control on the far right so every control shares one edge. */
+.g-row{display:flex;align-items:center;gap:16px;padding:15px 20px}
+.g-row + .g-row{border-top:1px solid var(--divider)}
+.g-icon{display:flex;color:var(--text-quiet);flex:none}
+.g-text{flex:1;min-width:0}
+.g-text h3{font-size:14px;line-height:20px;font-weight:500}
+.g-text p{margin-top:2px;max-width:560px;font-size:13px;line-height:20px;
+  color:var(--text-soft);text-wrap:balance}
+.g-action{flex:none;display:flex;align-items:center;padding-left:16px}
+
+/* ---------- Organization Profile ----------
+   The identity group keeps its own rhythm: the logo controls sit under
+   the helper they belong to, and the name field stays at a compact form
+   width rather than stretching across the canvas. */
+.logo-row{align-items:flex-start;padding:15px 20px}
+.logo-row .avatar{margin-top:2px}
+.logo-actions{display:flex;gap:8px;margin-top:10px}
+.logo-actions .btn{height:28px;display:inline-flex;align-items:center;gap:6px}
+
+.name-row{align-items:flex-start}
+.name-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.name-head label{font-size:14px;line-height:20px;font-weight:500}
+.name-row p{margin-top:2px;font-size:13px;line-height:20px;color:var(--text-soft)}
+
+.name-edit{display:flex;align-items:center;gap:10px;margin-top:8px}
+.name-edit input{width:320px;flex:none;height:36px;padding:0 12px;
+  border:1px solid var(--control-line);border-radius:8px;
+  background:var(--control);color:var(--text);font-size:14px}
+.name-edit .btn{height:36px;padding:0 16px}
+
+.save-feedback{font-size:12px;line-height:16px;color:var(--green)}
+
+.link-action{display:inline-flex;align-items:center;gap:6px;font-size:12px;
+  line-height:16px;color:var(--text-quiet);flex:none}
+.link-action:disabled{opacity:.7}
+
+/* ---------- controls ---------- */
+.btn{height:30px;padding:0 12px;border:1px solid var(--control-line);border-radius:8px;
+  background:var(--control);font-size:13px;line-height:1;color:var(--text);
+  display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.btn:disabled{opacity:.4}
+
+.switch{width:40px;height:22px;border-radius:11px;background:var(--green);
+  display:flex;align-items:center;padding:3px;justify-content:flex-end}
+.switch i{width:16px;height:16px;border-radius:50%;background:#10231a;display:block}
+.switch[aria-checked="false"]{background:#444;justify-content:flex-start}
+.switch[aria-checked="false"] i{background:#ddd}

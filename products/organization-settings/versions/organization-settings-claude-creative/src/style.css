@@ -1,0 +1,151 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+
+@font-face{font-family:Inter;src:url('/fonts/inter-400.ttf');font-weight:400;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-500.ttf');font-weight:500;font-display:block}
+@font-face{font-family:Inter;src:url('/fonts/inter-600.ttf');font-weight:600;font-display:block}
+
+/* ---------- ground ----------
+   A cool near-black canvas with the navigation sitting one step above it,
+   so the settings surface reads as the deepest plane and the column beside
+   it as chrome. Two hairline weights carry all structure: --line rules the
+   sections, --line-soft rules the rows inside them. One accent, spent only
+   on identity, the current location, an enabled switch, the single primary
+   action and focus. No cards, gradients or shadows. */
+:root{
+  --canvas:#101113;
+  --nav:#16171a;
+  --control:#1b1d21;
+  --control-hi:#22242a;
+  --line:#282a30;
+  --line-soft:#1f2126;
+  --text:#e9ebee;
+  --soft:#9ba1aa;
+  --quiet:#6d737c;
+  --accent:#3ecf8e;
+  --accent-ink:#0b1f16;
+}
+
+*{box-sizing:border-box}
+html,body,#root{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#0a0b0c;color:var(--text);
+  font:400 14px/20px Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+#root{display:grid;place-items:center}
+
+/* Fixed 1440x1024 artboard, scaled to fit the window by main.jsx. */
+.preview-frame{position:relative;overflow:hidden}
+.preview-artboard{width:1440px;height:1024px;transform-origin:top left}
+
+h1,h2,p{margin:0}
+input{font:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.app{width:1440px;height:1024px;background:var(--canvas);display:flex}
+
+/* ---------- the shared mark ---------- */
+.avatar{display:grid;place-items:center;border-radius:50%;flex:none;
+  background:rgba(62,207,142,.13);color:var(--accent)}
+.avatar-sm{width:20px;height:20px}
+.avatar-lg{width:64px;height:64px;background:rgba(62,207,142,.11)}
+
+/* ---------- 248px navigation ----------
+   Items run flush to the column edge so the current one can be marked with
+   a 2px rule on that edge. Log out is pinned to the foot rather than
+   floating after the last scope. */
+.sidebar{width:248px;flex:none;display:flex;flex-direction:column;
+  background:var(--nav);border-right:1px solid var(--line-soft);padding:30px 0 26px}
+
+.sidebar-head{padding:0 20px;margin-bottom:26px;
+  font-size:14px;line-height:20px;font-weight:600;letter-spacing:-.01em}
+
+.scope + .scope{margin-top:24px}
+.scope-label{padding:0 20px;margin-bottom:8px;
+  font-size:11px;line-height:16px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--quiet)}
+
+.scope-org{display:flex;align-items:center;gap:10px;height:34px;padding:0 20px;
+  margin-bottom:4px;color:var(--text)}
+.scope-org-name{font-size:14px;font-weight:500;letter-spacing:-.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scope-org-chevron{margin-left:auto;display:flex;color:var(--quiet)}
+
+.nav-item{position:relative;height:34px;display:flex;align-items:center;gap:11px;
+  padding:0 20px;color:var(--soft);font-size:14px;letter-spacing:-.002em}
+.nav-item svg{flex:none;color:var(--quiet)}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.017)}
+.nav-item.is-current{background:rgba(255,255,255,.035);color:var(--text);font-weight:500}
+.nav-item.is-current svg{color:var(--accent)}
+.nav-item.is-current::before{content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--accent)}
+
+/* Pinned to the foot and ruled off, so the gap above it reads as intent. */
+.sidebar-foot{margin-top:auto;padding-top:20px;border-top:1px solid var(--line-soft)}
+.nav-logout svg{color:#cf6a5c}
+
+/* ---------- settings surface ----------
+   1040px of content: a 200px section gutter, then the rows. */
+.main{flex:1;padding:88px 72px 0 80px;min-width:0}
+.content{width:1040px}
+
+.page-head{margin-bottom:44px}
+.page-head h1{font-size:34px;line-height:42px;font-weight:500;letter-spacing:-.025em}
+.page-head p{margin-top:10px;font-size:15px;line-height:24px;color:var(--soft)}
+
+/* ---------- bands ----------
+   Every band shares one grid. The gutter names the band and says once why
+   it exists; the rows hold only what changes. */
+.band{display:grid;grid-template-columns:200px 1fr;column-gap:48px;
+  border-top:1px solid var(--line);padding:44px 0 48px}
+/* The artboard's own bottom margin stands in for the last band's padding,
+   so the page closes on 90px of air instead of 138px. */
+.band:last-child{padding-bottom:0}
+.band-gutter{align-self:start}
+.band-gutter h2{font-size:15px;line-height:22px;font-weight:500;letter-spacing:-.008em}
+.band-gutter p{margin-top:6px;font-size:13px;line-height:20px;color:var(--quiet)}
+
+/* label | value | action, with the action column width-matched so all
+   controls in the page finish on one edge. */
+.row{display:grid;grid-template-columns:150px 1fr max-content;column-gap:28px;
+  align-items:center;padding:22px 0}
+.row:first-child{padding-top:0}
+.row:last-child{padding-bottom:0}
+.row + .row{border-top:1px solid var(--line-soft)}
+
+.row-label{font-size:14px;line-height:20px;font-weight:500;letter-spacing:-.005em}
+.row-value{min-width:0}
+.row-action{justify-self:end;display:flex}
+
+.hint{font-size:13px;line-height:20px;color:var(--soft)}
+.value{font-size:14px;line-height:20px;color:var(--text);
+  font-variant-numeric:tabular-nums}
+.value.is-unset{color:var(--quiet)}
+
+.logo-value{display:flex;align-items:center;gap:20px}
+
+/* ---------- controls ---------- */
+.row-value input{width:100%;height:40px;padding:0 13px;
+  border:1px solid var(--line);border-radius:9px;background:var(--control);
+  color:var(--text);font-size:14px;letter-spacing:-.005em}
+.row-value input:hover{border-color:#31343b}
+
+.status{min-height:18px;margin-top:9px;font-size:12px;line-height:18px;color:var(--accent)}
+
+.btn{min-width:84px;height:40px;padding:0 16px;display:inline-flex;
+  align-items:center;justify-content:center;border:1px solid var(--line);
+  border-radius:9px;background:var(--control);
+  font-size:13px;line-height:1;font-weight:500;letter-spacing:-.002em;color:var(--text)}
+.btn:hover{background:var(--control-hi);border-color:#32353c}
+
+/* Save is the one action on this page that changes something, so it is the
+   one action that carries the accent. */
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:#4ad699;border-color:#4ad699}
+.btn-primary:disabled{background:var(--control);border-color:var(--line);
+  color:var(--quiet);cursor:default}
+
+.switch{width:42px;height:24px;flex:none;border-radius:12px;padding:3px;
+  display:flex;align-items:center;justify-content:flex-end;background:var(--accent)}
+.switch i{display:block;width:18px;height:18px;border-radius:50%;background:var(--accent-ink)}
+.switch[aria-checked="false"]{background:#33363d;justify-content:flex-start}
+.switch[aria-checked="false"] i{background:#8b9198}

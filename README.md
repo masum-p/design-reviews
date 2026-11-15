@@ -2,6 +2,8 @@
 
 Live screens for team review: **https://masum-p.github.io/design-reviews/**
 
+Versions are also grouped by product under `products/`. Those folders are copies. The original apps are still in `projects/`, and the live site still uses `docs/`. Nothing was removed.
+
 ## Latest
 
 | Design | Live link |

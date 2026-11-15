@@ -1,0 +1,136 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+@font-face{font-family:Inter;src:url('/fonts/inter-400.ttf');font-weight:400}
+@font-face{font-family:Inter;src:url('/fonts/inter-500.ttf');font-weight:500}
+@font-face{font-family:Inter;src:url('/fonts/inter-600.ttf');font-weight:600}
+
+/* ---- tokens -------------------------------------------------------------
+   surfaces  canvas #f7f7f7 · card #ffffff · rail #f7f7f7 · border #e3e3e3
+   spacing   content inset 32 · block 24 · card pad 20 · gutter 20
+   type      13 body · 12 secondary · 16/500 card heading · 20-22/500 value
+-------------------------------------------------------------------------- */
+:root{
+  --canvas:#f7f7f7;--rail:#f7f7f7;--card:#ffffff;--inset:#efefef;
+  --line:#e3e3e3;--line-soft:#ededed;
+  --ink:#171717;--ink-2:#454545;--ink-3:#737373;
+  --accent:#00a9e8;--bar:#00a9e8;
+  --pad:16px;--gutter:16px;--block:20px;--side:64px;
+}
+
+*{box-sizing:border-box}
+html,body,#root{margin:0;width:100%;height:100%;overflow:hidden}
+body{font:13px/1.45 Inter,sans-serif;color:var(--ink-2);background:#eeeeee;-webkit-font-smoothing:antialiased}
+#root{display:grid;place-items:center}
+.preview-frame{position:relative;overflow:hidden}
+.preview-artboard{width:1440px;height:1024px;transform-origin:top left}
+button{font:inherit;color:inherit;background:none;border:0;display:flex;align-items:center;gap:8px;cursor:default}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,p{margin:0}
+
+.app-shell{width:1440px;height:1024px;display:flex;background:var(--canvas)}
+
+/* ---- sidebar: compact rhythm preserved ---------------------------------- */
+.sidebar{width:224px;flex-shrink:0;padding:24px 16px 0;background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column}
+.brand{font-size:26px;font-weight:600;letter-spacing:-.8px;padding:0 10px}
+.transfer{margin:22px 6px 24px;border:1px solid #171717;background:#171717;border-radius:6px;padding:9px 10px;justify-content:center}
+.nav-item{height:34px;width:100%;padding:0 10px;gap:10px;border-radius:6px;font-size:13px;color:#707070}
+.nav-item svg{color:#858585}
+.selected{background:#e9e9e9;color:var(--ink)}
+.selected svg{color:var(--ink)}
+.secondary{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}
+.secondary .nav-item{height:33px}
+.secondary svg{margin-left:auto}
+.profile{margin-top:auto;border-top:1px solid var(--line);padding:16px 10px;display:flex;align-items:center;gap:10px;font-size:12px}
+.profile>svg{margin-left:auto}
+.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#e3e3e3;color:var(--ink-2);font-size:10px}
+
+main{width:1216px;height:1024px;display:flex;flex-direction:column}
+
+/* ---- topbar: horizontal inset matches content --------------------------- */
+.topbar{height:64px;flex-shrink:0;padding:0 var(--side);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.title{display:flex;align-items:center;gap:20px}
+h1{font-size:22px;font-weight:500;letter-spacing:-.4px;color:var(--ink)}
+.period{font-size:13px;color:var(--ink-3)}
+.top-actions{display:flex;align-items:center;gap:20px;color:var(--ink-3)}
+.search{width:212px;padding:9px 10px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:6px;font-size:13px}
+.search kbd{margin-left:auto;font:inherit;font-size:12px}
+.more-action{width:28px;height:28px;padding:0;justify-content:center;border-radius:6px;color:var(--ink-3)}
+
+/* ---- page: 24 between sections, 32 at the sides ------------------------- */
+.page{flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:#b8b8b8 var(--canvas);display:flex;flex-direction:column;gap:var(--block);padding:48px var(--side)}
+/* ---- overview: the band gets a named heading like every other section, so
+   the reading period and its qualifiers sit in the heading's meta slot and a
+   hairline closes the group. Below the rule the only 12px text is the KPI
+   label, so nothing competes with it. ------------------------------------- */
+.overview{display:flex;flex-direction:column}
+.section-title.overview-head{align-items:baseline;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line-soft)}
+.overview-head h2{line-height:1.2}
+.overview-head .context{font-size:12px;color:#7d7d7d}
+.overview-head .context b{font-weight:400;color:var(--ink-3)}
+
+/* ---- six metrics: tighter 18px inset so amounts never wrap -------------- */
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--gutter)}
+.stat{min-width:0;padding:0 0 8px;background:transparent;border:0;border-radius:0}
+.stat>div{font-size:12px;font-weight:500;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat>strong{display:block;font-size:20px;line-height:1.2;font-weight:500;letter-spacing:-.4px;color:var(--ink);white-space:nowrap;margin:8px 0 10px}
+.stat small{display:flex;align-items:center;gap:2px;color:#16824f;font-size:12px;height:17px}
+.stat .neutral{color:var(--ink-3)}
+
+/* ---- breakdowns --------------------------------------------------------- */
+.breakdowns{display:grid;grid-template-columns:1.03fr 1fr;gap:var(--gutter)}
+.earnings,.countries,.merchants{padding:var(--pad);background:var(--card);border:1px solid var(--line);border-radius:6px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+h2{font-size:16px;font-weight:500;color:var(--ink)}
+.section-title>span{font-size:12px;color:var(--ink-3)}
+.section-title button{font-size:12px;color:var(--ink-3);gap:4px}
+
+.currency-head{display:grid;grid-template-columns:1fr 70px 110px;font-size:12px;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+.currency-head span:last-child{text-align:right}
+.currency-row{display:flex;gap:10px;height:42px;align-items:center}
+.currency-symbol{width:28px;height:28px;display:grid;place-items:center;color:var(--ink-3);font-size:18px;flex-shrink:0}
+.currency-info{flex:1;min-width:0}
+.currency-info>div:first-child{display:flex;align-items:center;font-size:13px;gap:8px}
+.currency-info b{font-weight:400;color:var(--ink-3)}
+.currency-info .share{margin-left:auto;color:var(--ink-3);font-size:12px}
+.currency-info strong{font-weight:400;font-size:13px;color:var(--ink);min-width:100px;text-align:right}
+.track{height:3px;border-radius:2px;background:var(--inset);margin-top:8px;overflow:hidden}
+.track i{display:block;height:3px;background:var(--bar)}
+.note{font-size:12px;color:var(--ink-3);margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft)}
+
+/* map block is vertically centred so leftover height reads as balance, not a void */
+.countries{display:flex;flex-direction:column}
+.legend{display:flex;gap:12px;font-size:12px;color:var(--ink-3);margin-bottom:16px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.world{display:block;width:100%;height:200px;flex:0 0 auto;object-fit:contain;margin:auto 0}
+.country-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.country-summary div{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.country-summary span{font-size:12px;color:var(--ink-3)}
+.country-summary strong{font-size:14px;font-weight:500;color:var(--ink)}
+.country-summary small{flex-basis:100%;font-size:12px;color:var(--ink-3)}
+
+/* ---- merchants ---------------------------------------------------------- */
+table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed}
+th{font-size:12px;color:var(--ink-3);font-weight:400;height:36px;vertical-align:middle;border-bottom:1px solid var(--line-soft)}
+th:first-child{width:31%}
+th:nth-child(2){width:15%}
+th:nth-child(3){width:23%}
+th:nth-child(4){width:14%}
+td{height:52px;font-size:13px;color:var(--ink-2);border-bottom:1px solid var(--line-soft)}
+tbody tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{text-align:right}
+td:last-child{color:var(--ink)}
+.merchant{display:flex;align-items:center;gap:12px}
+.merchant strong{display:block;font-size:13px;font-weight:400;color:var(--ink)}
+.merchant small{display:block;margin-top:2px;font-size:12px;color:var(--ink-3)}
+.merchant-logo{height:32px;width:32px;border-radius:6px;display:grid;place-items:center;font-size:12px;background:var(--inset);color:var(--ink-2)}
+.violet{color:#745994}
+.orange{color:#97622d}
+.blue{color:#426f9b}
+.green{color:#3b7956}
+
+footer{font-size:12px;color:#7d7d7d}
+
+/* White theme: neutral surfaces and cyan data accents from the reference. */
+.brand{color:var(--ink)}
+.transfer{color:#fff}
+.search{background:#fff}

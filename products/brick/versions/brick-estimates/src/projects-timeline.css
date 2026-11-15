@@ -1,0 +1,220 @@
+/* Projects, Timeline view. Source-frame structure (left rail, day lanes, More info state) in the
+   Gantt view's system (src/projects-gantt-ux.css), scoped to .px-page.
+   Neutral greys for structure; Primer accents only for meaning: green = primary / done, coral = active tab,
+   blue = today, amber = needs attention. Type 25 / 14 / 12 / 11px; no bold labels; nothing wraps. */
+.px-page{
+  --fg:#262626;--fg-muted:#6b6b6b;
+  --canvas:#ffffff;--canvas-subtle:#fcfcfc;
+  --border:#ebebeb;--border-muted:#f1f1f1;
+  --neutral-muted:#f1f1f1;--hover:#00000005;
+  --accent:#0969da;
+  --success:#1a7f37;--success-emphasis:#1f883d;--success-subtle:#dafbe1;--success-border:#4ac26b66;
+  --attention:#9a6700;--attention-emphasis:#bf8700;--attention-subtle:#fff8c5;--attention-border:#d4a72c66;
+  --underline:#fd8c73;
+  background:#f6f6f6;color:var(--fg);min-height:1300px
+}
+.px-page .px-main{padding-top:12px}
+.px-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Sidebar: same treatment as the Gantt view. */
+.notion-research.px-page>aside{background:#f6f6f6;border-right:1px solid transparent;color:var(--fg)}
+.px-page aside .text-ink,.px-page aside .text-slate-600,.px-page aside .text-slate-700{color:var(--fg)}
+.px-page aside .text-slate-500{color:var(--fg-muted)}
+.px-page aside svg{color:var(--fg-muted)}
+.px-page aside nav p{color:var(--fg-muted);font-weight:400}
+.px-page aside .bg-ink{background:var(--fg);color:#fff}
+.px-page aside .bg-ink svg{color:#fff}
+.px-page aside li{border-radius:6px;position:relative;color:var(--fg)}
+.px-page aside li:hover{background:var(--hover)}
+.notion-research.px-page aside [aria-current="page"]{background:#ebebeb;color:var(--fg)}
+.notion-research.px-page aside [aria-current="page"] svg{color:var(--fg)}
+.px-page aside li .tabular-nums{min-width:20px;padding:0 6px;border-radius:999px;background:var(--neutral-muted);color:var(--fg);font-size:12px;line-height:18px;text-align:center}
+.px-page aside .border-t{border-color:var(--border)}
+.px-page aside .bg-slate-100{background:var(--neutral-muted);color:var(--fg)}
+
+/* Shared control states */
+.px-page button{cursor:pointer;transition:background-color .12s,color .12s,box-shadow .12s}
+.px-page button:focus-visible,.px-scroller:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.px-page button:disabled{opacity:.5;cursor:not-allowed;background:transparent;color:#818b98}
+.px-text-btn{height:32px;padding:0 8px;border-radius:6px;font-size:12px;color:var(--fg-muted)}
+.px-page .px-text-btn:hover:not(:disabled){background:var(--hover);color:var(--fg)}
+.px-page .px-text-btn:active:not(:disabled){background:var(--neutral-muted)}
+.px-page .nr-tutorial{margin-left:-8px;color:var(--fg-muted)}
+.px-page .px-text-btn svg,.px-page .px-views svg{color:var(--fg-muted)}
+.notion-research.px-page .px-primary{height:32px;padding:0 12px;font-size:12px;border-radius:6px;background:var(--success-emphasis);color:#fff;box-shadow:none;border:1px solid #1f883d26}
+.notion-research.px-page .px-primary svg{color:#fff}
+.notion-research.px-page .px-primary:hover:not(:disabled){background:#1c8139;box-shadow:none}
+.notion-research.px-page .px-primary:active:not(:disabled){background:#197935}
+.px-icon-btn{width:28px;height:28px;border-radius:6px;color:var(--fg-muted);position:relative;flex-shrink:0}
+.px-page .px-icon-btn:hover:not(:disabled){background:#00000008;color:var(--fg)}
+.px-page .px-icon-btn:active:not(:disabled){background:var(--neutral-muted)}
+.px-page .px-icon-sm{width:24px;height:24px}
+
+/* Breadcrumb above the title, as in the source. */
+.px-breadcrumb{display:flex;align-items:center;gap:2px;margin:0 0 4px -6px;font-size:12px;color:var(--fg-muted)}
+.px-breadcrumb>span{margin-left:6px;color:var(--fg)}
+.px-page .nr-page-head{margin-bottom:8px}
+
+/* View switcher: UnderlineNav with coral active marker. */
+.px-viewbar{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--border);margin:0 0 16px}
+.px-views{display:flex;gap:4px}
+.px-page .px-views button{height:36px;padding:0 12px;gap:8px;font-size:12px;color:var(--fg-muted);position:relative;border-radius:6px 6px 0 0}
+.px-page .px-views button:hover:not([aria-current]){color:var(--fg);background:var(--hover)}
+.px-page .px-views button:active{background:var(--neutral-muted)}
+.px-page .px-views [aria-current]{color:var(--fg)}
+.px-page .px-views [aria-current] svg{color:var(--fg)}
+.px-page .px-views [aria-current]:after{content:'';position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--underline);border-radius:6px}
+.px-views small{font-size:11px;line-height:16px;color:var(--success);border:1px solid #4ac26b;border-radius:999px;padding:0 6px}
+.px-tools{display:flex;gap:4px;padding-bottom:4px}
+
+/* Today briefing (same component look as the Gantt view). */
+.px-brief{display:grid;grid-template-columns:1fr 1fr;background:var(--canvas);border:1px solid var(--border);border-radius:12px;margin-bottom:16px}
+.px-brief-col{padding:8px 16px;min-width:0}
+.px-brief-col+.px-brief-col{border-left:1px solid var(--border)}
+.px-brief h2{display:flex;align-items:center;gap:8px;height:32px;margin:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted)}
+.px-brief h2 span{min-width:20px;height:18px;padding:0 6px;border-radius:999px;background:var(--neutral-muted);color:var(--fg);font-size:12px;line-height:18px;letter-spacing:0;text-align:center;font-variant-numeric:tabular-nums}
+.px-brief ul{margin:0;padding:0;list-style:none}
+.px-brief li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:12px;height:32px;font-size:12px;color:var(--fg)}
+.px-brief li+li{border-top:1px solid var(--border-muted)}
+.px-brief li>.px-avatar{justify-self:center}
+.px-brief-task{display:flex;align-items:baseline;gap:8px;min-width:0;overflow:hidden}
+.px-brief-task>.px-trunc:first-child{flex:0 1 auto}
+.px-brief-task>small.px-trunc{flex:0 100 auto;font-size:11px;color:var(--fg-muted)}
+.px-brief-task .px-marker{align-self:center}
+.px-brief-meta{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--fg-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.px-page .px-warn-icon{color:var(--attention)}
+.px-initials{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--neutral-muted);color:var(--fg);font-size:11px;letter-spacing:.02em}
+
+/* Project cards with the source's coloured left rail (soft tints that sit in the neutral palette). */
+.px-projects{display:flex;flex-direction:column;gap:16px}
+.px-project{position:relative;display:grid;grid-template-columns:112px minmax(0,1fr);background:var(--canvas);border:1px solid var(--border);border-radius:12px}
+.px-tone-coral{--rail:#fbe8e1}
+.px-tone-blue{--rail:#e5eefa}
+.px-tone-violet{--rail:#eee9fa}
+.px-rail{display:flex;flex-direction:column;gap:16px;padding:12px;background:var(--rail);border-radius:11px 0 0 11px}
+.px-due-badge{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;background:var(--canvas);border-radius:8px;color:var(--attention);font-size:12px;box-shadow:0 0 0 1px #0000000a}
+.px-rail-block{display:flex;flex-direction:column;gap:2px}
+.px-rail-num{font-size:14px;color:var(--fg);font-variant-numeric:tabular-nums}
+.px-rail-label{font-size:11px;color:#555}
+.px-rail-bar{display:block;height:4px;margin-top:6px;border-radius:4px;background:#ffffffb3;overflow:hidden}
+.px-rail-bar i{display:block;height:100%;background:var(--success-emphasis)}
+.px-rail-split{padding-top:12px;border-top:1px solid #0000001a}
+.px-rail-date{font-size:12px;color:var(--fg);font-variant-numeric:tabular-nums}
+
+.px-project-main{min-width:0;display:flex;flex-direction:column}
+.px-project-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 12px 0 16px}
+.px-project-head h2{display:flex;align-items:baseline;gap:8px;min-width:0;overflow:hidden;margin:0;font-size:14px;line-height:24px;letter-spacing:-.2px;color:var(--fg)}
+.px-project-head h2>.px-trunc:first-child{flex:0 1 auto;font-weight:600}
+.px-project-head h2>.px-trunc:last-child{flex:0 100 auto;font-size:12px;color:var(--fg-muted);letter-spacing:0}
+.px-sep{color:#c8c8c8}
+.px-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.px-apps small{position:absolute;top:-2px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--neutral-muted);color:var(--fg);font-size:11px;line-height:16px}
+
+/* Tabs visible at rest, active one underlined in coral. */
+.px-tabs{display:flex;gap:4px;margin:4px 16px 0;border-bottom:1px solid var(--border)}
+.px-page .px-tabs button{height:32px;padding:0 8px;border-radius:6px 6px 0 0;font-size:12px;color:var(--fg-muted);position:relative}
+.px-page .px-tabs button:hover:not([aria-current]){background:#00000008;color:var(--fg)}
+.px-page .px-tabs button:active{background:var(--neutral-muted)}
+.px-page .px-tabs [aria-current]{color:var(--fg)}
+.px-page .px-tabs [aria-current]:after{content:'';position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--underline);border-radius:6px}
+
+/* Schedule: lanes scroll sideways (native bar hidden; slim track below mirrors it). */
+.px-schedule{padding:12px 16px 12px;min-width:0}
+.px-scroller{overflow-x:auto;scrollbar-width:none;border-radius:6px}
+.px-scroller::-webkit-scrollbar{display:none}
+.px-lanes{display:grid;grid-template-columns:40px repeat(5,184px);column-gap:24px;width:max-content;padding-bottom:4px}
+.px-lane,.px-earlier{display:flex;flex-direction:column;min-width:0;position:relative}
+.px-lane-date{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;height:24px;margin-bottom:8px;border-radius:6px;background:var(--neutral-muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#555;font-variant-numeric:tabular-nums}
+.px-connector{position:absolute;left:-24px;width:24px;display:flex;justify-content:center;color:#9a9a9a}
+.px-lane-tasks{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px}
+
+/* Clipped earlier lane, as in the source: header stub and card edge, no invented tasks. */
+.px-earlier .px-lane-date{border-radius:0 6px 6px 0;justify-content:flex-start;padding-left:4px;overflow:hidden;color:var(--fg-muted)}
+.px-earlier-body{flex:1;min-height:96px;border:1px solid var(--border);border-left:0;border-radius:0 8px 8px 0;background:var(--canvas)}
+
+/* Position marker: blue dot on today's header, line through the middle of the lane behind the cards. */
+.px-lane-today .px-lane-date{color:var(--accent)}
+.px-now-dot{position:absolute;left:calc(50% - 5px);bottom:-5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--canvas);z-index:2}
+.px-now-line{position:absolute;left:calc(50% - 1px);top:24px;bottom:-4px;width:2px;background:var(--accent);opacity:.7}
+
+/* Out-of-sequence lane is greyed, as in the source. */
+.px-lane-muted .px-lane-date{color:#9a9a9a;background:#f6f6f6}
+.px-lane-muted .px-task{opacity:.55}
+
+.px-task{display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:var(--canvas);border:1px solid var(--border);border-radius:8px;min-width:0}
+.px-task-title{display:flex;align-items:center;gap:6px;min-width:0;height:20px;font-size:12px;color:var(--fg)}
+.px-task-title>svg{color:var(--fg-muted)}
+.px-time{font-size:11px;line-height:16px;color:var(--fg-muted);font-variant-numeric:tabular-nums}
+.px-person{display:flex;align-items:center;gap:8px;height:24px;font-size:12px;color:var(--fg);min-width:0}
+.px-page .px-notes{align-self:flex-start;height:20px;padding:0 4px;margin-left:-4px;border-radius:4px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--fg-muted);font-variant-numeric:tabular-nums}
+.px-page .px-notes:hover{background:#00000008;color:var(--fg)}
+.px-marker{display:inline-flex;flex-shrink:0;color:#bf8700;cursor:help}
+.px-avatar{display:inline-block;width:20px;height:20px;border-radius:50%;background-image:url('/reference/projects-source.png');background-size:1824px 1368px;background-repeat:no-repeat;flex-shrink:0;box-shadow:0 0 0 1px #0000000f}
+
+.px-hours{display:flex;align-items:center;justify-content:center;gap:2px;width:max-content;margin:0 auto;padding-right:6px;font-size:11px;color:var(--fg-muted);background:var(--canvas);border-radius:6px}
+.px-milestone{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:112px;height:112px;margin:-32px auto 0;border:1.5px solid var(--accent);border-radius:50%;background:var(--canvas);color:var(--accent);font-size:11px;text-transform:uppercase}
+.px-milestone>span{line-height:14px}
+.px-milestone small{margin-top:4px;font-size:11px;color:var(--accent)}
+
+/* Footer: the "‹ 6 due" jump button and the scroll track. */
+.px-schedule-foot{display:flex;align-items:center;gap:12px;margin-top:12px;min-height:24px}
+.px-page .px-due-pill{height:24px;padding:0 10px 0 6px;gap:4px;border-radius:6px;background:var(--attention);color:#fff;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.px-page .px-due-pill:hover{background:#875a00}
+.px-page .px-due-pill svg{color:#fff}
+.px-track{position:relative;flex:1;height:4px;border-radius:4px;background:var(--neutral-muted)}
+.px-track i{position:absolute;top:0;bottom:0;border-radius:4px;background:#c8c8c8}
+
+/* More info state, laid out like the source. */
+.px-details{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px}
+.px-approved{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:6px;font-size:12px;color:var(--success);background:var(--canvas);border:1px dashed #4ac26b}
+.px-facts-row{display:flex;align-items:center;gap:32px;margin-top:4px}
+.px-fact{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--fg)}
+.px-fact svg{color:var(--fg-muted)}
+.px-contact-actions{display:flex;gap:8px}
+.px-page .px-square-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--canvas-subtle);color:var(--fg-muted)}
+.px-page .px-square-btn:hover{background:#00000008;color:var(--fg)}
+.px-page .px-square-btn:active{background:var(--neutral-muted)}
+.px-roles{display:grid;grid-template-columns:160px 160px 1fr;gap:16px;width:100%;margin-top:8px}
+.px-roles h3{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted)}
+.px-contact{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--fg)}
+.px-workers>div{display:flex;gap:24px}
+
+.px-page .px-resize{position:absolute;bottom:-11px;left:calc(50% - 10px);width:20px;height:20px;border-radius:50%;background:var(--canvas);border:1px solid var(--border);color:var(--fg-muted);z-index:3}
+
+/* One line everywhere: text never wraps; long text ends in an ellipsis with a title tooltip. */
+.px-page :is(h1,h2,h3,p,span,small,strong,b,button,li,a,label,s){white-space:nowrap}
+.px-trunc{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* No bold labels: only the page title, project/client names and the BRICK logo keep weight. */
+.px-page :is(b,strong,h2,h3,small,label,button,span,li,p,em,a,nav,s){font-weight:400}
+.px-page h1{font-weight:600;color:var(--fg)}
+.px-page .px-project-head h2>.px-trunc:first-child{font-weight:600}
+.px-page aside .font-bold{font-weight:700}
+body:has(.px-page){background:#f6f6f6}
+
+/* Project rails are neutral: the client name already identifies the project, and
+   colour is reserved for meaning (due, progress, today). */
+.px-page .px-tone-coral,.px-page .px-tone-blue,.px-page .px-tone-violet{--rail:#fcfcfc}
+.px-page .px-rail{border-right:1px solid #ebebeb}
+.px-page .px-rail-bar{background:#f1f1f1}
+.px-page .px-rail-split{border-top-color:#ebebeb}
+.px-page .px-lane-today .px-lane-date{background:#ddf4ff;color:#0969da}
+
+/* Approval reads as an ink stamp, not a UI chip: double rule, uppercase, a slight
+   tilt and uneven ink. Text stays regular weight per the no-bold rule. */
+.px-page .px-stamp{
+  display:inline-flex;flex-direction:column;align-items:center;gap:2px;align-self:flex-start;
+  margin:4px 0 4px 4px;padding:6px 14px 5px;
+  border:3px double #1a7f37;border-radius:4px;color:#1a7f37;
+  text-transform:uppercase;letter-spacing:.14em;line-height:1.1;
+  transform:rotate(-3deg);transform-origin:left center;opacity:.95;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='120' height='60' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='120' height='60' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.px-page .px-stamp-word{font-size:13px;font-weight:500}
+.px-page .px-stamp-date{font-size:10px;letter-spacing:.18em}
+/* The stamp sits in the open space of the details, like ink on a document. */
+.px-page .px-details{position:relative}
+.px-page .px-details .px-stamp{position:absolute;top:28px;right:160px;margin:0;transform:rotate(-6deg);transform-origin:center}
+.notion-research.px-page .px-primary{font-weight:400}
+.px-page .px-projects{gap:8px}

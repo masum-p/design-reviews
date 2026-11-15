@@ -1,0 +1,8 @@
+export const researchCards=[
+ {id:'001087 - 2',status:'Draft',client:'Gary Lindberg',project:'Bathroom Remodel',date:'May 24, 2024',total:'1,026.27',estimate:'2,718.03',color:'#8b9ee5',rows:[]},
+ {id:'001087 - 3',status:'Pending',client:'Kathleen Reed',project:'Tile Installation',date:'May 21, 2024',total:'3,309.65',estimate:'3,309.65',color:'#55bd9d',rows:[['Demolition & Disposal','827.41'],['Plumbing','1,323.86']]},
+ {id:'001088',status:'Accepted',client:'Susan Santoro',project:'Bathroom Remodel',date:'May 12, 2024',total:'23,335.75',estimate:'23,335.75',color:'#8994ac',progress:60,figures:['16,335.03','7,000.72','9,334.30','11,801,11'],rows:[['Demolition & Disposal','8,968.33','paid'],['Plumbing','9,874.67','pending'],['Electrical','997.98','pending']],action:'Add another invoice for this estimate'},
+ {id:'001089',status:'Accepted',client:'Ken Trajanovski',project:'Tile Installation',date:'May 10, 2024',total:'19,668.52',estimate:'19,668.52',color:'#bdc64d',progress:100,figures:['12,867.41','0','7,867.41','11,801.11'],rows:[['Draw 2','5,000.00','paid'],['Deposit Invoice','7,867.41','pending']]},
+ {id:'001091',status:'Accepted',client:'Gary Lindberg',project:'Carpentry',date:'May 8, 2024',total:'2,718.03',estimate:'6,271.08',color:'#56b9e2',rows:[],ready:true,action:'Add invoice for this estimate'},
+ {id:'001090',status:'Accepted',client:'Doris Muller',project:'Tile Service',date:'Mar 24, 2024',total:'6,271.08',estimate:'6,271.08',color:'#e6989c',progress:74,figures:['4,271.09','2,119.00','4,271.09','0'],rows:[['Cheque Payment','937.09','paid']],action:'Add another invoice for this estimate'}
+]
